@@ -46,5 +46,7 @@ public class App {
 		}
 		System.out.println("100을 넘어서는 시점의 합은? " + sum);
 		
+		System.out.println("정상커밋완료.");
+		
 	}
 }
