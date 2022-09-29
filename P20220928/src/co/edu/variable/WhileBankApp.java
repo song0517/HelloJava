@@ -23,7 +23,6 @@ public class WhileBankApp {
 				int money = scn.nextInt();
 
 				for (int i = 0; i < banks.length; i++) {
-
 					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
 						if (money % 1000 == 0) {
 							banks[i].balance = banks[i].balance + money;
