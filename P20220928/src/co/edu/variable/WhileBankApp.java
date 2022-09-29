@@ -21,23 +21,31 @@ public class WhileBankApp {
 				String accNo = scn.nextLine();
 				System.out.println("예금할 금액>>> ");
 				int money = scn.nextInt();
+				boolean check = true;
 
 				for (int i = 0; i < banks.length; i++) {
 					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
 						if (money % 1000 == 0) {
 							banks[i].balance = banks[i].balance + money;
+							check = false;
 						} else {
 							System.out.println("1000단위로 입금가능합니다.");
 							break;
 						}
 					}
 				}
+				
+				if(check) {
+					System.out.println("계좌가 없습니다.");
+				}
+				
 			} else if (menu == 2) {
 				System.out.println("계좌번호>>> ");
 				String accNo = scn.nextLine();
 				System.out.println("출금할 금액>>> ");
 				int money = scn.nextInt();
-
+				boolean check = true;
+				
 				for (int i = 0; i < banks.length; i++) {
 					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
 						if (money % 1000 != 0) {
@@ -48,17 +56,27 @@ public class WhileBankApp {
 							break;
 						} else {
 							banks[i].balance = banks[i].balance - money;
+							check = false;
 						}
 					}
+				}
+				
+				if(check) {
+					System.out.println("계좌가 없습니다.");
 				}
 			} else if (menu == 3) {
 				System.out.println("조회할 계좌번호 입력>>> ");
 				String accNo = scn.nextLine();
+				boolean check = true;
 
 				for (int i = 0; i < banks.length; i++) {
 					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
 						System.out.println("잔액 : " + banks[i].balance);
+						check = false;
 					}
+				}
+				if(check) {
+					System.out.println("계좌가 없습니다.");
 				}
 			} else if (menu == 4) {
 				break;
