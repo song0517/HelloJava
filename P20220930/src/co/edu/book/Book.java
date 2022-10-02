@@ -1,14 +1,14 @@
 package co.edu.book;
 
 public class Book {
-	private String bookId;
+	private int bookId;
 	private String bookName;
 	private int bookSal;
 	private String bookMark;
 	
 	public Book() {}
 	
-	public Book(String bookId, String bookName, int bookSal, String bookMark) {
+	public Book(int bookId, String bookName, int bookSal, String bookMark) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
@@ -16,10 +16,10 @@ public class Book {
 		this.bookMark = bookMark;
 	}
 	
-	public void setBookId(String bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
-	public String getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
 	
