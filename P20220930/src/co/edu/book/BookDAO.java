@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BookDAO {
 	Scanner scn = new Scanner(System.in);
-	Book[] liabray = new Book[100];
+	Book[] library = new Book[100];
 
 	// 1. 책 등록하기
 	public void bookAdd() {
@@ -21,9 +21,9 @@ public class BookDAO {
 		
 		Book check = new Book(bookId, bookName, bookSal, bookMark);
 		
-		for(int i=0; i<liabray.length; i++) {
-			if(liabray[i] == null) {
-				liabray[i] = check;
+		for(int i=0; i<library.length; i++) {
+			if(library[i] == null) {
+				library[i] = check;
 				System.out.println("도서 등록이 완료되었습니다.");
 				break;
 			}
@@ -33,7 +33,7 @@ public class BookDAO {
 	// 2. 책 리스트 출력
 	public void bookList() {
 		System.out.println("현재 있는 도서들입니다.");
-		for(Book check : liabray) {
+		for(Book check : library) {
 			if(check != null) {
 				System.out.println(check.toString());
 			}
@@ -43,12 +43,13 @@ public class BookDAO {
 	// 3. 원하는 책 출력
 	public void bookCheck() {
 		System.out.println("도서 찾기 목록입니다.");
-		System.out.print("찾고자 하는 도서의 ID를 입력해주세요. >>>");
-		int bookId = scn.nextInt();
-		scn.nextLine();
-		for(int i=0; i<liabray.length; i++) {
-			if(liabray[i] != null && liabray[i].getBookId()==bookId) {
-				System.out.println((i+1) + "번째 위치에 있습니다. 도서 이름은 : '" + liabray[i].getBookName() + "'입니다.");
+		System.out.print("찾고자 하는 도서이름를 입력해주세요. >>>");
+		String bookName = scn.nextLine();
+		
+		for(int i=0; i<library.length; i++) {
+			if(library[i] != null && library[i].getBookName()==bookName) {
+//				System.out.println((i+1) + "번째 위치에 있습니다. 도서 이름은 : '" + library[i].getBookName() + "'입니다.");
+				System.out.println(library[i].getBookId());
 				break;
 			}
 		}
@@ -64,10 +65,10 @@ public class BookDAO {
 		int bookSal = scn.nextInt();
 		scn.nextLine();
 		
-		for(int i=0; i<liabray.length; i++) {
-			if(liabray[i] != null && liabray[i].getBookId() == bookId) {
-				liabray[i].setBookSal(bookSal);
-				System.out.println(liabray[i].getBookId() + "아이디 번호의 " + liabray[i].getBookName() + "를 " + liabray[i].getBookSal() + "원으로 변경하였습니다.");
+		for(int i=0; i<library.length; i++) {
+			if(library[i] != null && library[i].getBookId() == bookId) {
+				library[i].setBookSal(bookSal);
+				System.out.println(library[i].getBookId() + "아이디 번호의 " + library[i].getBookName() + "를 " + library[i].getBookSal() + "원으로 변경하였습니다.");
 				break;
 			}
 		}
@@ -79,9 +80,9 @@ public class BookDAO {
 		System.out.print("판매가 된 도서ID를 입력해주세요. >>>");
 		int bookId = scn.nextInt();
 		scn.nextLine();
-		for(int i=0; i<liabray.length; i++) {
-			if(liabray[i] != null && liabray[i].getBookId()==bookId) {
-				liabray[i] = null;
+		for(int i=0; i<library.length; i++) {
+			if(library[i] != null && library[i].getBookId()==bookId) {
+				library[i] = null;
 				System.out.println("도서가 삭제되었습니다. 확인해주세요.");
 				break;
 			}
