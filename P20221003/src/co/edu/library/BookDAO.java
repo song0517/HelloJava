@@ -16,18 +16,18 @@ public class BookDAO {
 	public void add() {
 		System.out.println("도서 등록 메뉴입니다.");
 		System.out.print("도서 ID를 입력하세요. >>>");
-		String bookId = scn.next();
+		String bookId = scn.nextLine();
 		System.out.print("도서 이름를 입력하세요. >>>");
-		String bookName = scn.next();
+		String bookName = scn.nextLine();
 		System.out.print("도서 출판사를 입력하세요. >>>");
-		String bookCom = scn.next();
+		String bookCom = scn.nextLine();
 		System.out.println("분류코드 : 1.문학 2.자연과학 3.역사 4.예술 5.기타..");
 		System.out.print("도서 분류코드를 입력하세요. >>>");
-		int bookCode = scn.nextInt();
+		int bookCode = scn.nextInt(); scn.nextLine();
 		System.out.print("도서 요약을 입력하세요. >>>");
-		String bookRep = scn.next();
+		String bookRep = scn.nextLine();
 		System.out.print("도서 가격을 입력하세요. >>>");
-		int bookSal = scn.nextInt();
+		int bookSal = scn.nextInt(); scn.nextLine();
 		
 		Book bk = new Book(bookId, bookName, bookCom, bookCode, bookRep, bookSal);
 		for(int i=0; i<library.length; i++) {
@@ -56,7 +56,7 @@ public class BookDAO {
 			System.out.println("분류별 도서를 확인하는 목록입니다.");
 			System.out.println("분류코드 : 1.문학 2.자연과학 3.역사 4.예술 5.기타..");
 			System.out.print("보고싶은 분류 코드 번호를 입력하세요. >>>");
-			int bookCode = scn.nextInt();
+			int bookCode = scn.nextInt(); scn.nextLine();
 
 			for(Book bk : library) {
 				if(bk != null && bk.getBookCode() == bookCode) {
@@ -70,7 +70,7 @@ public class BookDAO {
 		int count = 0;
 		System.out.println("도서 ID를 찾는 메뉴입니다.");
 		System.out.print("찾고자 하는 도서 이름을 입력하세요. >>> ");
-		String bookName = scn.next();
+		String bookName = scn.nextLine();
 		for(int i=0; i<library.length; i++) {
 			if(library[i] != null && library[i].getBookName().equals(bookName)) {
 				System.out.println(bookName + "의 아이디는 " + library[i].getBookId() + "입니다.");
@@ -84,7 +84,7 @@ public class BookDAO {
 	public void name() {
 		System.out.println("도서 이름을 찾는 메뉴입니다.");
 		System.out.print("찾고자 하는 도서 ID을 입력하세요. >>> ");
-		String bookId = scn.next();
+		String bookId = scn.nextLine();
 		for(int i=0; i<library.length; i++) {
 			if(library[i] != null && library[i].getBookId().equals(bookId)) {
 				System.out.println(library[i].getBookId() + "의 책은 " + library[i].getBookName()  + "입니다.");
@@ -97,7 +97,7 @@ public class BookDAO {
 	public void update() {
 		System.out.println("도서 가격 수정메뉴입니다.");
 		System.out.print("수정하고 싶은 도서 ID를 입력하세요. >>>");
-		String bookId = scn.next();
+		String bookId = scn.nextLine();
 		System.out.println(bookId);
 		System.out.print("수정할 가격을 입력하세요. >>>");
 		int bookSal = scn.nextInt();
@@ -116,7 +116,7 @@ public class BookDAO {
 	public void del() {
 		System.out.println("판매된 도서 삭제 목록입니다.");
 		System.out.print("판매가 된 도서ID를 입력하세요. >>>");
-		String bookId = scn.next();
+		String bookId = scn.nextLine();
 		
 		for(int i=0; i<library.length; i++) {
 			if(library[i] != null && library[i].getBookId().equals(bookId)) {
@@ -135,7 +135,7 @@ public class BookDAO {
 			System.out.println("메뉴 : 1.책등록 2.전체목록 3.분류별보기 4.Id찾기 5.도서찾기 6.가격수정 7.판매도서삭제 9.종료");
 			System.out.println("원하는 항목의 번호를 입력하세요. >>> ");
 			
-			int menu = scn.nextInt();
+			int menu = scn.nextInt(); scn.nextLine();
 			switch (menu) {
 			case 1:
 				add();
