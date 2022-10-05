@@ -7,6 +7,7 @@ public class MethodCalendar {
 	}
 	
 	//반복문을 가지고 달력 출력
+	//static는 정적메소드는 클래스.makeCal이라고 하면 실행.
 	public static void makeCal(int month) {
 		System.out.println("        >>> " + month + " 월 <<<");
 		String[] days = {"Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"};
