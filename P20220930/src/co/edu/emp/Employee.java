@@ -111,4 +111,12 @@ public class Employee {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "사원ID=" + employeeId + ", 사원이름=" + name + ", 부서번호=" + deptId + ", 부서이름=" + deptName
+				+ ", 급여=" + salary + ", 이메일=" + email;
+	}
+	
+	
+
 }

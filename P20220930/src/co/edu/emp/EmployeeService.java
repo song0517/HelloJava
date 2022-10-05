@@ -14,5 +14,8 @@ public interface EmployeeService {
 	// 전체 사원정보 출력
 	public void print();
 	
+	//급여정보가져오기 메소드, 사원아이디에 해당되는 급여정보 반환
+	//리턴타입은 void말고 데이터타입으로 지정(int, String..)
+	public int searchSal(int employeeId);
 	
 }
