@@ -11,6 +11,7 @@ public class WhileBank {
 	public static void bankApp() {
 		Scanner scn = new Scanner(System.in);
 		boolean run = true;
+		//초기값 설정
 		int money = 0;
 		// 메뉴 : 1)예금 2)출금 3)잔고확인 4)종료
 		// 10만원이 넘으면 예금안됨. 잔고보다 더 많은 돈을 출금하지 못한다.
@@ -35,7 +36,7 @@ public class WhileBank {
 				}
 				break;
 			case 2:
-				System.out.println("출굼처리 메뉴");
+				System.out.println("출금처리 메뉴");
 				System.out.println("출금액을 입력 >>> ");
 				int input2 = scn.nextInt();
 				if (input2 % 1000 != 0) {

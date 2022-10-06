@@ -14,106 +14,90 @@ public class WhileBankApp {
 			System.out.println("메뉴 : 0.계좌번호생성 1.예금 2.출금 3.잔액 4.종료");
 			int menu = scn.nextInt();
 			scn.nextLine();
-			Account s1 = new Account();
-			
 
-//			if (menu == 1) {
-//				// 예금가능, 어떤 계좌번호에 얼마를 넣을 것인가?
-//				System.out.println("계좌번호>>> ");
-//				String accNo = scn.nextLine();
-//				s1.setAccNo(accNo);
-//				System.out.println("예금할 금액>>> ");
-//				int money = scn.nextInt();
-//				boolean check = true;
-//
-//				for (int i = 0; i < banks.length; i++) {
-//					if (banks[i] != null && banks[i].getAccNo().equals(accNo)) {
-//						if (money % 1000 == 0) {
-//							banks[i].setBalance() = banks[i].balance + money;
-//							check = false;
-//						} else {
-//							System.out.println("1000단위로 입금가능합니다.");
-//							break;
-//						}
-//					}
-//				}
-//				
-//				if(check) {
-//					System.out.println("계좌가 없습니다.");
-//				}
-//			}
+			if (menu == 1) {
+				// 예금가능, 어떤 계좌번호에 얼마를 넣을 것인가?
+				System.out.println("계좌번호>>> ");
+				String accNo = scn.nextLine();
+				System.out.println("예금할 금액>>> ");
+				int money = scn.nextInt();
+				boolean check = true;
+
+				for (int i = 0; i < banks.length; i++) {
+					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
+						if (money % 1000 == 0) {
+							banks[i].balance = banks[i].balance + money;
+							check = false;
+						} else {
+							System.out.println("1000단위로 입금가능합니다.");
+							break;
+						}
+					}
+				}
 				
-//			} else if (menu == 2) {
-//				Account s2 = new Account();
-//				
-//				System.out.println("계좌번호>>> ");
-//				String accNo = scn.nextLine();
-//				s2.setAccNo(accNo);
-//				System.out.println("출금할 금액>>> ");
-//				int money = scn.nextInt();
-//				boolean check = true;
-//				
-//				for (int i = 0; i < banks.length; i++) {
-//					if (banks[i] != null && banks[i].getAccNo().equals(accNo)) {
-//						if (money % 1000 != 0) {
-//							System.out.println("1000단위로 출금가능합니다.");
-//							break;
-//						} else if (banks[i].balance < money) {
-//							System.out.println("잔고가 부족합니다.");
-//							break;
-//						} else {
-//							banks[i].balance = banks[i].balance - money;
-//							check = false;
-//						}
-//					}
-//				}
-//				
-//				if(check) {
-//					System.out.println("계좌가 없습니다.");
-//				}
-//			} else if (menu == 3) {
-//				Account s3 = new Account();
-//				
-//				System.out.println("조회할 계좌번호 입력>>> ");
-//				String accNo = scn.nextLine();
-//				s3.setAccNo(accNo);
-//				boolean check = true;
-//				
-//
-//				for (int i = 0; i < banks.length; i++) {
-//					if (banks[i] != null && banks[i].getAccNo().equals(accNo)) {
-//						System.out.println("잔액 : " + banks[i].balance);
-//						check = false;
-//					}
-//				}
-//				if(check) {
-//					System.out.println("계좌가 없습니다.");
-//				}
-//			} 
-			 if (menu == 4) {
+				if(check) {
+					System.out.println("계좌가 없습니다.");
+				}
+				
+			} else if (menu == 2) {
+				System.out.println("계좌번호>>> ");
+				String accNo = scn.nextLine();
+				System.out.println("출금할 금액>>> ");
+				int money = scn.nextInt();
+				boolean check = true;
+				
+				for (int i = 0; i < banks.length; i++) {
+					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
+						if (money % 1000 != 0) {
+							System.out.println("1000단위로 출금가능합니다.");
+							break;
+						} else if (banks[i].balance < money) {
+							System.out.println("잔고가 부족합니다.");
+							break;
+						} else {
+							banks[i].balance = banks[i].balance - money;
+							check = false;
+						}
+					}
+				}
+				
+				if(check) {
+					System.out.println("계좌가 없습니다.");
+				}
+			} else if (menu == 3) {
+				System.out.println("조회할 계좌번호 입력>>> ");
+				String accNo = scn.nextLine();
+				boolean check = true;
+
+				for (int i = 0; i < banks.length; i++) {
+					if (banks[i] != null && banks[i].accNO.equals(accNo)) {
+						System.out.println("잔액 : " + banks[i].balance);
+						check = false;
+					}
+				}
+				if(check) {
+					System.out.println("계좌가 없습니다.");
+				}
+			} else if (menu == 4) {
 				break;
 			} else if (menu == 0) {
-				
 				System.out.println("계좌번호입력>>> ");
 				String accNo = scn.nextLine();
-				s1.setAccNo(accNo);
 				System.out.println("예금주>>> ");
 				String owner = scn.nextLine();
-				s1.setOwner(owner);
-				
-//				Account acc = new Account(); // 인스턴스 생성.
-//				acc.accNO = accNo;
-//				acc.owner = owner;
+
+				Account acc = new Account(); // 인스턴스 생성.
+				acc.accNO = accNo;
+				acc.owner = owner;
 
 				for (int i = 0; i < banks.length; i++) {
 					if (banks[i] == null) {
 						// 한건입력 후 break;
-						banks[i] = s1;
-						
+						banks[i] = acc;
 						break;
 					}
 				}
-				System.out.println( s1.showInfo() + "계좌 생성이 완료되었습니다.");
+				System.out.println("계좌 생성이 완료되었습니다.");
 			}
 		}
 	}

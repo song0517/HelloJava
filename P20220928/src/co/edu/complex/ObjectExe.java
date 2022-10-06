@@ -8,7 +8,7 @@ public class ObjectExe {
 		int i1 = 20;
 		double d1 = 162.3;
 
-		// 인스턴스 생성, 생성자 함수, 비어있는 공간을 먼저 생성한 후 -> class이름 변수이름 = new class이름();
+		// 인스턴스 생성(생성자 함수) 비어있는 공간을 먼저 생성한 후 -> class이름 변수이름 = new class이름();
 		// new가 Person의 실체를 만들고 주소값을 p1에 담기.
 		Person p1 = new Person();
 		p1.name = "김민기";
@@ -42,7 +42,7 @@ public class ObjectExe {
 		//p3.name = "송지은";
 
 		// p1변수값과 persons[0]값을 비교.
-		//System.out.println(persons[0] == p1);
+//		System.out.println(persons[0] == p1);
 		
 		// 김경미 이름을 찾아서 나이를 22살로 바꾸기.
 		// 반복 for ==(O,X) => equals

@@ -42,6 +42,7 @@ public class MainApp {
 		
 		//Parent 인스턴스가 담겨있다.
 		Parent c3 = new Parent();
+		
 		//casting, if를 안쓸 경우 문법상 가능은 하지만 실행에는 오류가 발생
 		//instance가 맞는지 확인을 한 후 실행, 아래는 결과x
 		//담겨있는 변수의 인스턴스가 어떤 타입인지 먼저 확인한 후 실행

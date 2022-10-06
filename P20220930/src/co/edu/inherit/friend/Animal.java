@@ -10,8 +10,8 @@ public abstract class Animal {
 		this.kind = kind;
 	}
 	
-	public void move() {
-		System.out.println("움직인다!");
+	public void move(String kind) {
+		System.out.println(kind + "움직인다!");
 	}
 	
 	//추상메소드 : 자식클래스에서 반드시 구현하도록 강제의무부여.

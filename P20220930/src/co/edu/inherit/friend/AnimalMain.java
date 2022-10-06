@@ -8,6 +8,11 @@ public class AnimalMain {
 		Animal cat = new Cat();
 		Animal dog = new Dog();
 		
+		cat.eat();
+		dog.eat();
+		
+		cat.move("고양이");
+		
 		//똑같은 speak메소드이지만 인스턴스에따라 결과값은 다르게 나타난다.
 		cat.speak();
 		dog.speak();

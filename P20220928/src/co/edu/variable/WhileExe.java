@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class WhileExe {
 	public static void main(String[] args) {
+//		whileFnc();
+//		whileFnc2();
 		whileFnc3();
 	}
 

@@ -1,9 +1,13 @@
 package co.edu.variable;
 
 public class Account {
-	private String accNO;  // 계좌번호, 두단어의 조합: 2번째 첫번째 대문자.
-	private String owner; // 예금주
-	private int balance; // 예금액. 잔고
+//	private String accNO;  // 계좌번호, 두단어의 조합: 2번째 첫번째 대문자.
+//	private String owner; // 예금주
+//	private int balance; // 예금액. 잔고
+	
+	 String accNO;  // 계좌번호, 두단어의 조합: 2번째 첫번째 대문자.
+	 String owner; // 예금주
+	 int balance; // 예금액. 잔고
 	
 	// setter, getter 정의
 	//계좌번호

@@ -60,6 +60,7 @@ public class AppMain {
 		WorkMan wman = new WorkMan();
 		wman.name = "직장인";
 		wman.age = 30;
+		wman.company = "예담";
 		
 		StudMan sman = new StudMan();
 		sman.school = "고등학교";
