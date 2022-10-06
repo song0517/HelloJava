@@ -18,5 +18,7 @@ public class RectPrint {
 			}
 			System.out.println();
 		}
+		
+		
 	}
 }
