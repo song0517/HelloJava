@@ -10,7 +10,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class SendExample {
 	public static void main(String[] args) {
 		
-		// coolsms 사이트 이용
+		// coolsms 사이트 이용 - 송지은
 		String api_key = "api키";
 	    String api_secret = "api_secret";
 	    Message coolsms = new Message(api_key, api_secret);
