@@ -68,7 +68,7 @@ public class SetExample {
 			set.add((int) (Math.random() * 45) + 1);
 		}
 		for(int n : set) {
-			System.out.println(n);
+			System.out.print(n + ", ");
 		}
 
 //		// 중복 저장 불가

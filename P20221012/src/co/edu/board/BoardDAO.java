@@ -67,10 +67,10 @@ public class BoardDAO extends DAO {
 		
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select board_num, board_title, board_writer, creation_date from board");
+			rs = stmt.executeQuery("select * from board");
 			
 			while (rs.next()) {
-				list.add(new Board(rs.getInt("board_num"),rs.getString("board_title"), rs.getString("board_writer"), rs.getString("creation_date")));
+				list.add(new Board(rs.getInt("board_num"),rs.getString("board_title"), rs.getString("board_content"), rs.getString("board_writer"), rs.getString("creation_date"), rs.getInt("cnt")));
 			}
 			
 		} catch (SQLException e) {
@@ -102,6 +102,21 @@ public class BoardDAO extends DAO {
 			disconnect();
 		}
 		return boa;
+	}
 	
+	public void count(int bNum) {
+		String sql = "update board set cnt = cnt + 1 where board_num = ?";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, bNum);
+			
+			int r = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 }

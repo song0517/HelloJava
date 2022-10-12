@@ -8,13 +8,14 @@ public class Memo implements Serializable {
 	private String date;
 	private String content;
 	
+	//생성자
 	public Memo(int no, String date, String content) {
 		this.no = no;
 		this.date = date;
 		this.content = content;
 	}
 	
-	//getter / setter
+	//getter, setter
 	public void setNo(int no) {
 		this.no = no;
 	}

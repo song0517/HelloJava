@@ -14,9 +14,10 @@ public class BoardApp {
 		
 		BoardDAO dao = new BoardDAO();
 		Board boa = null;
-		int count = 0;
 		
 		Scanner scn = new Scanner(System.in);
+		
+		int count = 0;
 		
 		while(true) {
 			System.out.println("메뉴 : 1.글등록 2.글수정 3.글삭제 4.글목록 5.상세조회 9.종료");
@@ -33,8 +34,8 @@ public class BoardApp {
 				String bContent = scn.nextLine();
 				System.out.print("글 작성자>>> ");
 				String bWriter = scn.nextLine();
-
-				boa = new Board(bNum, bTitle, bContent, bWriter, format_time1 , count);
+				
+				boa = new Board(bNum, bTitle, bContent, bWriter, format_time1, count);
 				dao.insert(boa);
 				
 			} else if(menu == 2) {
@@ -44,7 +45,7 @@ public class BoardApp {
 				System.out.print("수정하고 싶은 내용>>> ");
 				String bContent = scn.nextLine();
 				
-				boa = new Board(bNum, null, bContent, null, format_time1, 0);
+				boa = new Board(bNum, null, bContent, null, format_time1, count);
 				dao.update(boa);
 				
 			} else if(menu == 3) {
@@ -67,6 +68,7 @@ public class BoardApp {
 				System.out.print("내용을 보고 싶은 글 번호>>> ");
 				int bNum = Integer.parseInt(scn.nextLine());
 				
+				dao.count(bNum);
 				System.out.println(dao.getBoard(bNum));
 				
 			} else if(menu == 9) {

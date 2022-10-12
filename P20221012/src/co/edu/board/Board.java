@@ -15,14 +15,7 @@ public class Board {
 		this.bContent = bContent;
 		this.bWriter = bWriter;
 		this.bDate = bDate;
-		this.count = 0;
-	}
-	
-	public Board(int bNum, String bTitle, String bWriter, String bDate) {
-		this.bNum = bNum;
-		this.bTitle = bTitle;
-		this.bWriter = bWriter;
-		this.bDate = bDate;
+		this.count = count;
 	}
 	
 	public int getbNum() {

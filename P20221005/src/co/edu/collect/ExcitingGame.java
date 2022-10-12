@@ -30,7 +30,7 @@ public class ExcitingGame {
 			}
 			long game = System.currentTimeMillis();
 			
-			if(((game - gameStart)/1000)%60 > 5) {
+			if(((game - gameStart)/1000)%60 > 30) {
 				System.out.println("시간초과");
 				break;
 			}
