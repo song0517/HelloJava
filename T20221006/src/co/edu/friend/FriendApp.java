@@ -22,31 +22,39 @@ public class FriendApp {
 			}
 			
 			if (menu == 1) { //
-				Friend friend = new Friend();
+//				Friend friend = new Friend();
+				Friend friend = null;
 				
 				System.out.println("1.학교친구 2.회사친구 3.친구");
 				System.out.print("선택>> ");
 				int subMenu = scn.nextInt(); scn.nextLine();
 				
+				//공통적인 부분은 밖에 따로 설정해도 된다.
+				System.out.println("이름 입력 >>> ");
+				String name = scn.nextLine();
+				System.out.println("연락처 입력 >>> ");
+				String phoneNumber = scn.nextLine();
+				
 				if (subMenu == 1) {
 					// 학교친구정보등록
-					System.out.println("이름 입력 >>> ");
-					String name = scn.nextLine();
-					System.out.println("연락처 입력 >>> ");
-					String phoneNumber = scn.nextLine();
+//					System.out.println("이름 입력 >>> ");
+//					String name = scn.nextLine();
+//					System.out.println("연락처 입력 >>> ");
+//					String phoneNumber = scn.nextLine();
 					System.out.println("학교 입력 >>> ");
 					String college = scn.nextLine();
 					System.out.println("전공 입력 >>> ");
 					String major = scn.nextLine();
 					
+					//부모클래스라서 값을 집어넣을 수 있다. -> 인스턴스만 변경하면 된다.
 					friend = new UniFriend(name, phoneNumber, college, major);
 
 				} else if (subMenu == 2) {
 					// 회사친구등록
-					System.out.println("이름 입력 >>> ");
-					String name = scn.nextLine();
-					System.out.println("연락처 입력 >>> ");
-					String phoneNumber = scn.nextLine();
+//					System.out.println("이름 입력 >>> ");
+//					String name = scn.nextLine();
+//					System.out.println("연락처 입력 >>> ");
+//					String phoneNumber = scn.nextLine();
 					System.out.println("회사명 입력 >>> ");
 					String company = scn.nextLine();
 					System.out.println("부서명 입력 >>> ");
@@ -56,10 +64,10 @@ public class FriendApp {
 					
 				} else if(subMenu == 3){
 					// 친구정보등록
-					System.out.println("이름 입력 >>> ");
-					String name = scn.nextLine();
-					System.out.println("연락처 입력 >>> ");
-					String phoneNumber = scn.nextLine();
+//					System.out.println("이름 입력 >>> ");
+//					String name = scn.nextLine();
+//					System.out.println("연락처 입력 >>> ");
+//					String phoneNumber = scn.nextLine();
 					
 					friend = new Friend(name, phoneNumber);
 
