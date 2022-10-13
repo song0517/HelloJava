@@ -198,4 +198,26 @@ public class BoardDAO extends DAO {
 		}
 		return null;
 	}
+	
+	public int bCount() {
+		String sql = "select * from board";
+		conn = getConnect();
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			int count = 0;
+
+			while (rs.next()) {
+				count ++;
+			}
+			return count;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
+	}
 }

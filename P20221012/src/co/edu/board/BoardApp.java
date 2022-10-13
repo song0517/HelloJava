@@ -84,11 +84,22 @@ public class BoardApp {
 				} else if (menu == 4) {
 					System.out.println("===글 목록===");
 					List<Board> boards = dao.search();
-
-					for (Board bo : boards) {
-						System.out.println("글 번호: " + bo.getbNum() + ", 글 제목: " + bo.getbTitle() + ", 글 작성자: "
-								+ bo.getbWriter() + ", 작성일시: " + bo.getbDate());
-					}
+					
+//					int page = 1;
+					
+//					final int rowsParpage = 3;
+//					int boarCount = dao.bCount();
+					
+//					int totalPage = (int) Math.ceil(boarCount/ (double) rowsParpage);
+//					
+//					int pageCount = 1;
+//					int startPage = ((page - 1) / pageCount) * pageCount + 1;
+//					int endPage = startPage + pageCount - 1;
+					
+//					for (Board bo : boards) {
+//						System.out.println("글 번호: " + bo.getbNum() + ", 글 제목: " + bo.getbTitle() + ", 글 작성자: "
+//								+ bo.getbWriter() + ", 작성일시: " + bo.getbDate());
+//					}
 
 				} else if (menu == 5) {
 					System.out.println("===상세조회===");
