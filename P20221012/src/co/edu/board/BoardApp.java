@@ -68,6 +68,8 @@ public class BoardApp {
 						boa = new Board(bNum, null, bContent, null, null, count);
 						dao.update(boa);
 						System.out.println("수정이 완료되었습니다.");
+					} else {
+						System.out.println("작성자가 달라 수정할 수 없습니다.");
 					}
 				} else if (menu == 3) {
 					System.out.println("===글 삭제메뉴===");
@@ -79,8 +81,11 @@ public class BoardApp {
 					if (name.equals(id)) {
 						dao.delete(bNum);
 						System.out.println("삭제가 완료되었습니다.");
-
+					} else {
+						System.out.println("작성자가 달라 삭제할 수 없습니다.");
 					}
+					
+					
 				} else if (menu == 4) {
 					System.out.println("===글 목록===");
 					List<Board> boards = dao.search();
@@ -96,10 +101,10 @@ public class BoardApp {
 //					int startPage = ((page - 1) / pageCount) * pageCount + 1;
 //					int endPage = startPage + pageCount - 1;
 					
-//					for (Board bo : boards) {
-//						System.out.println("글 번호: " + bo.getbNum() + ", 글 제목: " + bo.getbTitle() + ", 글 작성자: "
-//								+ bo.getbWriter() + ", 작성일시: " + bo.getbDate());
-//					}
+					for (Board bo : boards) {
+						System.out.println("글 번호: " + bo.getbNum() + ", 글 제목: " + bo.getbTitle() + ", 글 작성자: "
+								+ bo.getbWriter() + ", 작성일시: " + bo.getbDate());
+					}
 
 				} else if (menu == 5) {
 					System.out.println("===상세조회===");

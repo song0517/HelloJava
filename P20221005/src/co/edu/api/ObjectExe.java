@@ -59,8 +59,8 @@ public class ObjectExe {
 		s2.age = 10;
 		String s3 = "Hong";
 
-//		System.out.println(s1.equals(s3));
-//		System.out.println(s1.toString());
+		System.out.println(s1.equals(s3));
+		System.out.println(s1.toString());
 		System.out.println(s1.hashCode());
 		System.out.println(s2.hashCode());
 		
@@ -81,6 +81,10 @@ public class ObjectExe {
 		students.add(s1);
 		students.add(s2);
 		System.out.println("컬렉션의 크기 : " + students.size());
+		
+		for(Student st : students) {
+			System.out.println(st);
+		}
 		
 	}
 }

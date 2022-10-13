@@ -8,6 +8,7 @@ public class ByteToStringExample {
 		String str1 = new String(bytes);
 		System.out.println(str1);
 		
+		//6자리부터 4번째까지 출력
 		String str2 = new String(bytes, 6, 4);
 		System.out.println(str2);
 	}

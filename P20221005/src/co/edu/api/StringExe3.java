@@ -87,6 +87,7 @@ class Employee {
 public class StringExe3 {
 	public static void main(String[] args) {
 		
+		//Box클래스에는 <String>타입만 입력되도록 설정.
 		Box<String> box = new Box<String>();
 		box.set("Hello");
 		//String에 제한되어 오류 발생...

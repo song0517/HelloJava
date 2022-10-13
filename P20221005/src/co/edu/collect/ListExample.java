@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 public class ListExample {
 	public static void main(String[] args) {
+		//String타입만 추가 가능
 		ArrayList<String> strs = new ArrayList<String>();
 		//추가.
 		strs.add("홍길동");
