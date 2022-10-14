@@ -12,6 +12,7 @@ public class StringExe2 {
 
 		while (true) {
 			try {
+				System.out.println("입력 >>> ");
 				int by = System.in.read(bytes); // abd -> 아스키코드로 읽어옴.. 65(A)~90(Z), 97(a)~122(z)
 				String str = new String(bytes, 0, by - 2);
 
