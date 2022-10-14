@@ -86,7 +86,7 @@ public class SortExe {
 	            System.out.print(n + " ");
 	        }
 	    
-		/*
+		
 	        int temp=0;
 	        for (int i = 0; i < numAry.length; i++) {
 	            for (int j = i+1; j < numAry.length; j++) {
@@ -117,7 +117,7 @@ public class SortExe {
 	        for(int i : numAry) {
 	            System.out.println(i);
 	        }
-        */
+        
         
 		
         /*

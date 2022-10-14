@@ -15,8 +15,8 @@ public class CharStreamExample {
 	
 	public static void read() {
 		try {
-//			FileReader reader = new FileReader("C:/Temp/addr.txt");
-			FileReader reader = new FileReader("src/co/edu/io/ByteStreamExample.java");
+			FileReader reader = new FileReader("C:/Temp/addr.txt");
+//			FileReader reader = new FileReader("src/co/edu/io/ByteStreamExample.java");
 			
 			while(true) {
 				int bytes = reader.read();
