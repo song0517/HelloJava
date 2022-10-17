@@ -1,5 +1,7 @@
 package co.tra;
 
+import java.sql.ResultSet;
+
 public class Student {
 	private String stuId; //회원ID
 	private String stuPw; //회원PW
