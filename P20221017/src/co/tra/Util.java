@@ -15,9 +15,8 @@ public class Util {
 				return menu;
 			} catch (NumberFormatException e) {
 				System.out.println("숫자를 입력하세요.");
-				scn.nextLine();
+				System.out.println("입력 >>> ");
 			}
 		}
-		//문자열 리턴
 	}
 }

@@ -27,7 +27,7 @@ public class TrainingApp {
 			if (logmenu == 1) {
 				System.out.println("1. 관리자 계정 2. 회원 계정");
 
-				int accmenu = Util.checkMenu("메뉴를 입력하세요>> ");
+				int accmenu = Util.checkMenu("입력 >>> ");
 				if (accmenu == 1) {
 					// 1-1. 관리자 계정
 					System.out.println("===관리자 계정 회원가입===");
@@ -40,6 +40,7 @@ public class TrainingApp {
 
 					mag = new Manager(magId, magPw, magName);
 					tdao.magInsert(mag);
+					continue;
 
 				} else if (accmenu == 2) {
 					// 1-2. 회원 계정
@@ -57,6 +58,7 @@ public class TrainingApp {
 
 					stu = new Student(stuId, stuPw, stuName, stuPhone, stuBir, 0, null);
 					tdao.stuInsert(stu);
+					continue;
 
 				} else {
 					// 번호 잘못 눌렀을 경우
@@ -66,7 +68,6 @@ public class TrainingApp {
 			} else if (logmenu == 2) {
 				// 1-2. 로그인 과정
 				System.out.println("로그인 계정을 선택해 주세요 : 1. 관리자 2. 회원");
-				System.out.print("입력 >>> ");
 				int accCkMenu = Util.checkMenu("입력 >>> ");
 				if (accCkMenu == 1) {
 					// 2-1. 관리자 계정 로그인
@@ -84,6 +85,7 @@ public class TrainingApp {
 						System.out.println("등록되어 있지 않은 정보입니다.");
 						continue;
 					}
+				
 				} else if (accCkMenu == 2) {
 					// 2-2. 회원 계정 로그인
 					System.out.println("===회원 계정===");
@@ -113,7 +115,6 @@ public class TrainingApp {
 
 			while (true) {
 				System.out.println("메뉴: 1. 등록 2. 수정 3. 조회 4. 삭제 9. 종료");
-				System.out.print("입력 >>> ");
 				int mainMenu = Util.checkMenu("입력 >>> ");
 
 				// 1. 등록 메뉴
@@ -128,8 +129,8 @@ public class TrainingApp {
 						if (regMenu == 1) {
 							// 1-1. 과목 등록 메뉴
 							System.out.println("===과목 등록===");
-							System.out.print("과목 ID 입력 >>> ");
-							int traId = Integer.parseInt(scn.nextLine());
+//							System.out.print("과목 ID 입력 >>> ");
+							int traId = Util.checkMenu("과목 ID 입력 >>> ");
 							System.out.print("과목 이름 입력 >>> ");
 							String traName = scn.nextLine();
 							System.out.print("강사 입력 >>> ");
@@ -139,7 +140,7 @@ public class TrainingApp {
 							System.out.print("교육 요일 입력 >>> ");
 							String traDay = scn.nextLine();
 							System.out.print("수강 가능 인원 입력 >>> ");
-							int stCo = Integer.parseInt(scn.nextLine());
+							int stCo = Util.checkMenu("수강 가능 인원 입력 >>> ");
 
 							tra = new Training(traId, traName, tName, traTime, traDay, stCo, 0);
 							tdao.tarInsert(tra);
@@ -148,8 +149,8 @@ public class TrainingApp {
 							System.out.println("===회원 수강과목 등록===");
 							System.out.print("등록할 회원ID >>> ");
 							String stuId = scn.nextLine();
-							System.out.print("수강신청할 과목ID >>> ");
-							int traId = Integer.parseInt(scn.nextLine());
+//							System.out.print("수강신청할 과목ID >>> ");
+							int traId = Util.checkMenu("수강신청할 과목ID >>> ");
 
 							// ID에 맞는 수강과목 찾기
 							String traName = tdao.traNameCheck(traId);
@@ -181,8 +182,8 @@ public class TrainingApp {
 						// 관리자가 맞는지 확인 후 실행
 						check = tdao.magCheck(id, pw);
 						if (check == 1) {
-							System.out.print("변경할 강사 과목ID >>> ");
-							int traId = Integer.parseInt(scn.nextLine());
+							//System.out.print("변경할 강사 과목ID >>> ");
+							int traId = Util.checkMenu("변경할 강사 과목ID >>> ");
 							System.out.print("변경할 강사 이름 >>> ");
 							String tName = scn.nextLine();
 
@@ -279,8 +280,8 @@ public class TrainingApp {
 					} else if (selMenu == 3) {
 						// 3-3
 						System.out.println("===특정 과목 조회===");
-						System.out.print("조회하고 싶은 과목ID >>> ");
-						int traId = Integer.parseInt(scn.nextLine());
+						//System.out.print("조회하고 싶은 과목ID >>> ");
+						int traId = Util.checkMenu("조회하고 싶은 과목ID >>> ");
 
 						System.out.println(tdao.traNameSearch(traId));
 
@@ -354,8 +355,8 @@ public class TrainingApp {
 							// 4-1
 							System.out.println("===과목 삭제===");
 
-							System.out.print("삭제하고 싶은 과목ID를 입력하세요. >>> ");
-							int traId = Integer.parseInt(scn.nextLine());
+							//System.out.print("삭제하고 싶은 과목ID를 입력하세요. >>> ");
+							int traId = Util.checkMenu("삭제하고 싶은 과목ID를 입력하세요. >>> ");
 							// 과목 삭제
 							tdao.traDelete(traId);
 							// 과목에 달린 후기 삭제
@@ -379,6 +380,8 @@ public class TrainingApp {
 					// 9. 종료
 					System.out.println("종료");
 					break;
+				} else {
+					System.out.println("올바른 메뉴 번호가 아닙니다.");
 				}
 			}
 		}
