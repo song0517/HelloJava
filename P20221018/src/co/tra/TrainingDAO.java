@@ -41,7 +41,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(5, stu.getStuBir());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -62,7 +61,6 @@ public class TrainingDAO extends DAO {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-//				rs.getString("id");
 				return 1;
 			}
 		} catch (SQLException e) {
@@ -86,7 +84,6 @@ public class TrainingDAO extends DAO {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-//				rs.getString("id");
 				return 1;
 			}
 		} catch (SQLException e) {
@@ -112,7 +109,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(6, tra.getStCo());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -153,7 +149,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, traId);
 
 			r = psmt.executeUpdate();
-			System.out.println(r + "건 완료");
 			return r;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -173,7 +168,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, traId1);
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 회원 삭제완료");
 			return r;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -196,7 +190,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(3, stu.getStuId());
 
 			r = psmt.executeUpdate();
-			System.out.println(r + "건 학생 수강 등록 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -216,7 +209,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(2, stu.getStuId());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 학생 수강 등록 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -225,22 +217,22 @@ public class TrainingDAO extends DAO {
 	}
 
 	// 강사 이름 변경
-	public void tNameUpdate(Training tra) {
+	public int tNameUpdate(Training tra) {
 		String sql = "update training set t_name = ? where tra_id = ?";
 		conn = getConnect();
-
+		int r = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, tra.gettName());
 			psmt.setInt(2, tra.getTraId());
 
-			int r = psmt.executeUpdate();
-			System.out.println(r + "건 강사 변경 완료");
+			r = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
+		return r;
 	}
 
 	// 회원 조회
@@ -266,6 +258,29 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 		return stu;
+	}
+	
+	//강사조회
+	public Manager getMag(String magId) {
+		String sql = "select * from manager where mag_id = ?";
+		conn = getConnect();
+		Manager mag = new Manager("", "", "");
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, magId);
+
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				mag = new Manager(rs.getString("mag_id"), rs.getString("mag_pwd"), rs.getString("mag_name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return mag;
 	}
 
 	// 전체 과목 조회
@@ -297,7 +312,7 @@ public class TrainingDAO extends DAO {
 
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select * from student");
+			rs = stmt.executeQuery("select * from student order by stu_id");
 
 			while (rs.next()) {
 				list.add(new Student(rs.getString("stu_id"), rs.getString("stu_pwd"), rs.getString("stu_name"),
@@ -310,6 +325,27 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 		return list;
+	}
+	
+	// 전체 선생님 조회
+	public List<Manager> magAll(){
+		conn = getConnect();
+		List<Manager> list = new ArrayList<Manager>();
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from manager");
+			
+			while (rs.next()) {
+				list.add(new Manager(rs.getString("mag_id"), rs.getString("mag_pwd"), rs.getString("mag_name")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+		
 	}
 
 	// 특정과목찾기
@@ -426,7 +462,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(3, trr.getReWriter());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -445,7 +480,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(2, trr.getTraSeq());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 변경 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -463,7 +497,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, traId);
 
 			r = psmt.executeUpdate();
-			System.out.println(r + "건 삭제 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -482,7 +515,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, traId);
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 삭제 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -500,7 +532,6 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, tra_seq);
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 삭제 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -519,7 +550,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(1, magId);
 
 			r = psmt.executeUpdate();
-			System.out.println(r + "건 삭제 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -528,7 +558,7 @@ public class TrainingDAO extends DAO {
 		return r;
 	}
 
-	// 회원삭제
+	// 회원과목삭제
 	public void stuDelete(int traId) {
 		String sql = "update student set tar_id = null, tar_name = null where tar_id = ?";
 		conn = getConnect();
@@ -538,13 +568,36 @@ public class TrainingDAO extends DAO {
 			psmt.setInt(1, traId);
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 삭제 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
-
+	}
+	
+	//과목별 수강생 조회
+	public List<Student> traStu(int traId) {
+		String sql = "select * from student where tar_id = ?";
+		conn = getConnect();
+		List<Student> list = new ArrayList<Student>();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, traId);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new Student(rs.getString("stu_id"), rs.getString("stu_pwd"), rs.getString("stu_name"),
+						rs.getString("stu_Phone"), rs.getString("stu_Bir"), rs.getInt("tar_id"),
+						rs.getString("tar_name")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
 	}
 
 }
