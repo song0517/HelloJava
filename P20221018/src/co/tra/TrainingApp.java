@@ -19,13 +19,14 @@ public class TrainingApp {
 		int check = 0;
 
 		// 처음 화면
-		while (!cklog) {
-			System.out.println("메뉴 : 1. 회원가입 2. 로그인 3.종료");
+		while (!cklog) { 
+			// 회원가입 & 로그인 메뉴 ㅂ
+			System.out.println("▶▶▶▶▶▶▶▶▶▶ 메뉴 : 1. 회원가입 2. 로그인 3.종료 ◀◀◀◀◀◀◀◀◀◀");
 			int logmenu = Util.checkMenu("입력 >>> ");
 
 			// 1. 회원가입 과정
 			if (logmenu == 1) {
-				System.out.println("1. 관리자 계정 2. 회원 계정");
+				System.out.println("▶▶▶▶▶▶▶▶▶▶ 1. 관리자 계정 2. 회원 계정 ◀◀◀◀◀◀◀◀◀◀");
 
 				int accmenu = Util.checkMenu("입력 >>> ");
 				if (accmenu == 1) {
@@ -33,33 +34,42 @@ public class TrainingApp {
 					System.out.println("===관리자 계정 회원가입===");
 					System.out.print("관리자 ID 입력 >>> ");
 					String magId = scn.nextLine();
-					System.out.print("관리자 PW 입력 >>> ");
-					String magPw = scn.nextLine();
-					System.out.print("관리자 이름 입력 >>> ");
-					String magName = scn.nextLine();
+					if (tdao.magSearch(magId).getMagId().equals(magId)) {
+						System.out.println("동일한 관리자ID가 있습니다.");
+						continue;
+					} else {
+						System.out.print("관리자 PW 입력 >>> ");
+						String magPw = scn.nextLine();
+						System.out.print("관리자 이름 입력 >>> ");
+						String magName = scn.nextLine();
 
-					mag = new Manager(magId, magPw, magName);
-					tdao.magInsert(mag);
-					continue;
-
+						mag = new Manager(magId, magPw, magName);
+						tdao.magInsert(mag);
+						continue;
+					}
 				} else if (accmenu == 2) {
 					// 1-2. 회원 계정
 					System.out.println("===회원 계정 회원가입===");
-					System.out.println("회원 ID 입력 >>> ");
+					System.out.print("회원 ID 입력 >>> ");
 					String stuId = scn.nextLine();
-					System.out.println("회원 PW 입력 >>> ");
-					String stuPw = scn.nextLine();
-					System.out.println("회원 이름 입력 >>> ");
-					String stuName = scn.nextLine();
-					System.out.println("회원 연락처 입력 >>> ");
-					String stuPhone = scn.nextLine();
-					System.out.println("회원 생년월일 입력 >>> ");
-					String stuBir = scn.nextLine();
+					if (tdao.getStu(stuId).getStuId().equals(stuId)) {
+						System.out.println("동일한 학생ID가 있습니다.");
+						continue;
+					} else {
+						System.out.print("회원 PW 입력 >>> ");
+						String stuPw = scn.nextLine();
+						System.out.print("회원 이름 입력 >>> ");
+						String stuName = scn.nextLine();
+						System.out.print("회원 연락처 입력 >>> ");
+						String stuPhone = scn.nextLine();
+						System.out.print("회원 생년월일 입력 >>> ");
+						String stuBir = scn.nextLine();
 
-					stu = new Student(stuId, stuPw, stuName, stuPhone, stuBir, 0, null);
-					tdao.stuInsert(stu);
-					continue;
-
+						stu = new Student(stuId, stuPw, stuName, stuPhone, stuBir, 0, null);
+//					System.out.println(stu.toString());
+						tdao.stuInsert(stu);
+						continue;
+					}
 				} else {
 					// 번호 잘못 눌렀을 경우
 					System.out.println("잘못된 메뉴 번호입니다. 다시 입력해 주세요.");
@@ -67,7 +77,7 @@ public class TrainingApp {
 				}
 			} else if (logmenu == 2) {
 				// 1-2. 로그인 과정
-				System.out.println("로그인 계정을 선택해 주세요 : 1. 관리자 2. 회원");
+				System.out.println("▶▶▶▶▶▶▶▶▶▶ 로그인 계정을 선택해 주세요 : 1. 관리자 2. 회원");
 				int accCkMenu = Util.checkMenu("입력 >>> ");
 				if (accCkMenu == 1) {
 					// 2-1. 관리자 계정 로그인
@@ -85,7 +95,6 @@ public class TrainingApp {
 						System.out.println("등록되어 있지 않은 정보입니다.");
 						continue;
 					}
-				
 				} else if (accCkMenu == 2) {
 					// 2-2. 회원 계정 로그인
 					System.out.println("===회원 계정===");
@@ -116,22 +125,28 @@ public class TrainingApp {
 				continue;
 			}
 
+			// 메인 메뉴
 			while (true) {
-				System.out.println("메뉴: 1. 등록 2. 수정 3. 조회 4. 삭제 9. 종료");
+				System.out.println("▶▶▶▶▶▶▶▶▶▶ 메뉴: 1. 등록 2. 수정 3. 조회 4. 삭제 9. 종료");
 				int mainMenu = Util.checkMenu("입력 >>> ");
 
 				// 1. 등록 메뉴
+
 				if (mainMenu == 1) {
 					System.out.println("===등록메뉴===");
 					// 관리자 계정인지 확인
 					check = tdao.magCheck(id, pw);
 					if (check == 1) {
-						System.out.println("등록 메뉴 : 1. 과목 등록 2. 회원 수강과목 등록");
+						System.out.println("▶▶▶▶▶▶▶▶▶▶ 등록 메뉴 : 1. 과목 등록 2. 회원 수강과목 등록");
 						int regMenu = Util.checkMenu("입력 >>> ");
 						if (regMenu == 1) {
 							// 1-1. 과목 등록 메뉴
 							System.out.println("===과목 등록===");
 							int traId = Util.checkMenu("과목 ID 입력 >>> ");
+							if (tdao.traNameSearch(traId).getTraId() == traId) {
+								System.out.println("동일한 과목ID가 있습니다.");
+								continue;
+							}
 							System.out.print("과목 이름 입력 >>> ");
 							String traName = scn.nextLine();
 							System.out.print("강사 입력 >>> ");
@@ -162,6 +177,8 @@ public class TrainingApp {
 								System.out.println("수강 인원이 초과하여 등록할 수 없습니다.");
 								continue;
 							}
+						} else {
+							System.out.println("올바른 번호가 아님");
 						}
 					} else {
 						// 관리자 계정이 아닐경우
@@ -171,7 +188,7 @@ public class TrainingApp {
 				} else if (mainMenu == 2) {
 					// 2. 수정메뉴
 					System.out.println("===수정메뉴===");
-					System.out.println("1. 과목 정보 변경 2. 회원 수강 과목 변경 3. 회원정보 변경");
+					System.out.println("▶▶▶▶▶▶▶▶▶▶ 1. 과목 정보 변경 2. 회원 수강 과목 변경 3. 회원정보 변경");
 					int updMenu = Util.checkMenu("입력 >>> ");
 
 					if (updMenu == 1) {
@@ -181,7 +198,7 @@ public class TrainingApp {
 						// 관리자가 맞는지 확인 후 실행
 						check = tdao.magCheck(id, pw);
 						if (check == 1) {
-							int traId = Util.checkMenu("변경할 강사 과목ID >>> ");
+							int traId = Util.checkMenu("변경할 과목ID >>> ");
 							System.out.print("변경할 강사 이름 >>> ");
 							String tName = scn.nextLine();
 
@@ -249,7 +266,7 @@ public class TrainingApp {
 				} else if (mainMenu == 3) {
 					// 3. 조회 메뉴
 					System.out.println("===조회메뉴===");
-					System.out.println("1. 과목 전체 2. 회원 전체 3. 특정 과목 조회 4. 특정 회원 조회");
+					System.out.println("▶▶▶▶▶▶▶▶▶▶ 1. 과목 전체 2. 회원 전체 3. 특정 과목 조회 4. 특정 회원 조회 5. 작성한 댓글 확인");
 					int selMenu = Util.checkMenu("입력 >>> ");
 					if (selMenu == 1) {
 						// 3-1
@@ -306,7 +323,7 @@ public class TrainingApp {
 								String reContent = scn.nextLine();
 
 								String reWriter = id;
-								traRe = new TraReply(traId, reContent, reWriter, null);
+								traRe = new TraReply(0, traId, reContent, reWriter, null);
 
 								tdao.reInsert(traRe);
 								System.out.println("후기를 추가했습니다.");
@@ -335,6 +352,59 @@ public class TrainingApp {
 						} else {
 							System.out.println("본인 또는 관리자만 수정가능합니다.");
 						}
+					} else if (selMenu == 5) {
+						// 3-5
+						System.out.println("===자신이 작성한 후기 조회===");
+						List<TraReply> trReply = tdao.reWrSearch(id);
+						if (trReply.size() == 0) {
+							System.out.println("● 후기가 없습니다.");
+						}
+						for (TraReply res : trReply) {
+							System.out.println("● " + res);
+						}
+
+						System.out.println("\n ▶▶▶▶▶▶▶▶▶▶ Q: 1. 후기 수정 2. 후기 삭제 3. 종료");
+						int reUp = Util.checkMenu(">>> ");
+						int count = 0;
+
+						if (reUp == 1) {
+							int reNum = Util.checkMenu("수정하고 싶은 후기 번호 입력 >>> ");
+
+							// 본인인지 확인확인
+							for (TraReply res : trReply) {
+								if (reNum == res.getTraSeq()) {
+									System.out.print("수정할 후기 내용 >>> ");
+									String reContent = scn.nextLine();
+
+									traRe = new TraReply(reNum, 0, reContent, null, null);
+
+									tdao.trUpdate(traRe);
+									System.out.println("후기를 수정했습니다.");
+									count = 1;
+								}
+							}
+
+							if (count == 0) {
+								System.out.println("수정할 수 있는 번호가 없습니다.");
+							}
+
+						} else if (reUp == 2) {
+							int dlNum = Util.checkMenu("삭제하고 싶은 후기 번호 입력 >>> ");
+
+							// 본인인지 확인확인
+							for (TraReply res : trReply) {
+								if (dlNum == res.getTraSeq()) {
+									tdao.trSeDelete(dlNum);
+									System.out.println("후기를 삭제했습니다.");
+									count = 1;
+								}
+							}
+							if (count == 0) {
+								System.out.println("삭제할 수 있는 번호가 없습니다.");
+							}
+						} else if (reUp == 3) {
+							System.out.println("처음메뉴로 이동합니다.");
+						}
 					}
 				} else if (mainMenu == 4) {
 					// 4. 삭제메뉴
@@ -343,43 +413,66 @@ public class TrainingApp {
 					// 관리자 확인.
 					check = tdao.magCheck(id, pw);
 					if (check == 1) {
-						System.out.println("메뉴 : 1. 과목 삭제 2. 회원 수강과목 삭제 3. 관리자 삭제");
+						System.out.println("▶▶▶▶▶▶▶▶▶▶ 메뉴 : 1. 과목 삭제 2. 회원 수강과목 삭제 3. 관리자 삭제");
 						int deMenu = Util.checkMenu("입력 >>> ");
 
 						if (deMenu == 1) {
 							// 4-1
 							System.out.println("===과목 삭제===");
 							int traId = Util.checkMenu("삭제하고 싶은 과목ID를 입력하세요. >>> ");
-							// 과목 삭제
-							tdao.traDelete(traId);
-							// 과목에 달린 후기 삭제
-							tdao.trrDelete(traId);
-							System.out.println("삭제가 완료되었습니다.");
+
+							System.out.println("'" + traId + "' 계정을 삭제하시겠습니까?");
+							int magCheck = Util.checkMenu("1. 예 2.아니요 >>> ");
+
+							if (magCheck == 1) {
+//								tdao.trrDelete(traId);
+//								System.out.println("삭제가 완료되었습니다.");
+								if (tdao.traDelete(traId) == 1) {
+									tdao.stuDelete(traId);
+									System.out.println("삭제가 완료되었습니다.");
+								} else {
+									System.out.println("과목ID가 없습니다.");
+								}
+							} else if (magCheck == 2) {
+								System.out.println("처음화면으로 돌아갑니다.");
+							}
+
 						} else if (deMenu == 2) {
 							// 4-2
 							System.out.println("===회원 수강과목 삭제===");
 							System.out.print("삭제할 회원ID 입력 >>> ");
 							String stuId = scn.nextLine();
-							int traId = tdao.getStu(stuId).getTraId();
-							tdao.delCount(traId);
-							// 수강ID와 수강이름만 삭제
-							stu = new Student(stuId, null, null, null, null, 0, "");
-							tdao.stuUpdate(stu);
+
+							System.out.println("'" + stuId + "' 계정의 수강항목을 삭제하시겠습니까?");
+							int stuCheck = Util.checkMenu("▶▶▶▶▶▶▶▶▶▶ 1. 예 2.아니요 >>> ");
+
+							if (stuCheck == 1) {
+								stu = new Student(stuId, null, null, null, null, 0, "");
+								int traId = tdao.getStu(stuId).getTraId();
+								tdao.delCount(traId);
+								if (tdao.stuUpdate(stu) == 1) {
+									System.out.println("삭제가 완료되었습니다.");
+								} else {
+									System.out.println("회원 계정이 없습니다.");
+								}
+							} else if (stuCheck == 2) {
+								System.out.println("처음화면으로 돌아갑니다.");
+							}
 						} else if (deMenu == 3) {
 							System.out.println("===관리자 계정 삭제===");
 							System.out.print("삭제할 관리자ID 입력 >>> ");
 							String magId = scn.nextLine();
-							
+
 							System.out.println("'" + magId + "' 계정을 삭제하시겠습니까?");
-							int magCheck = Util.checkMenu("1. 예 2.아니요 >>> ");
-							
-							if(magCheck == 1) {
-								if(tdao.magDelete(magId)==1) {
+							int magCheck = Util.checkMenu("▶▶▶▶▶▶▶▶▶▶ 1. 예 2.아니요 >>> ");
+
+							if (magCheck == 1) {
+								if (tdao.magDelete(magId) == 1) {
 									System.out.println("삭제가 완료되었습니다.");
 								} else {
 									System.out.println("관리자 계정이 없습니다.");
 								}
-							} else if(magCheck == 2){
+							} else if (magCheck == 2) {
 								System.out.println("처음화면으로 돌아갑니다.");
 							}
 						}
@@ -393,7 +486,7 @@ public class TrainingApp {
 				} else {
 					System.out.println("올바른 메뉴 번호가 아닙니다.");
 				}
-			}
-		}
+			} // end of while (true) 메인 메뉴 부분
+		} // end of while (!cklog) 로그인 부분
 	}
 }
