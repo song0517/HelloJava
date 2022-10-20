@@ -19,7 +19,7 @@ public class UpdMenu {
 		// 관리자 계정인지 확인
 		
 			while (!updLog) {
-				System.out.println("·········· 1. 과목 정보 변경 2. 회원 수강 과목 변경 3. 회원정보 변경 4. 처음으로 ··········");
+				System.out.println("\n·········· 1. 과목 정보 변경 2. 회원 수강 과목 변경 3. 회원정보 변경 4. 처음으로 ··········");
 				int updMenu = Util.checkMenu("입력 >>> ");
 
 				if (updMenu == 1) {

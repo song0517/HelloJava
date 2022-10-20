@@ -32,10 +32,10 @@ public class TrainingApp {
 			if (id.equals("4")) {
 				break;
 			}
-
+			
 			// 메인 메뉴
 			while (true) {
-				System.out.println("·········· 1. 등록 2. 수정 3. 조회 4. 삭제 9. 종료 ··········");
+				System.out.println("\n·········· 1. 등록 2. 수정 3. 조회 4. 삭제 9. 종료 ··········");
 				int mainMenu = Util.checkMenu("입력 >>> ");
 
 				// 1. 등록 메뉴

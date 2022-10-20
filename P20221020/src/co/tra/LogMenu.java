@@ -1,5 +1,6 @@
 package co.tra;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,9 +16,9 @@ public class LogMenu {
 		String pw = null;
 		boolean cklog = false;
 		int check = 0;
-		
+
 		while (!cklog) {
-			System.out.println("·········· 1.회원가입 2.로그인 3. 비밀번호 찾기 4.종료 ··········");
+			System.out.println("\n·········· 1.회원가입 2.로그인 3. 비밀번호 찾기 4.종료 ··········");
 			int logmenu = Util.checkMenu("입력 >>> ");
 
 			// 1. 회원가입 과정
@@ -69,7 +70,7 @@ public class LogMenu {
 				}
 			} else if (logmenu == 2) {
 				// 1-2. 로그인 과정
-				System.out.println("·········· 로그인 계정을 선택해 주세요 : 1. 관리자 2. 회원 ··········");
+				System.out.println("\n·········· 로그인 계정을 선택해 주세요 : 1. 관리자 2. 회원 ··········");
 				int accCkMenu = Util.checkMenu("입력 >>> ");
 				if (accCkMenu == 1) {
 					// 2-1. 관리자 계정 로그인
@@ -101,12 +102,13 @@ public class LogMenu {
 					if (check == 1) {
 						cklog = true;
 						System.out.println("회원계정 로그인 완료.");
-						if (pw.equals("5080")) {
+						if (tdao.selPw(pw).equals(pw)) {
 							System.out.println("===임시 비밀번호를 수정해 주세요.===");
 							System.out.print("수정할 비밀번호 >>> ");
 							String upPw = scn.nextLine();
 							tdao.pwdUpdate(new Student(id, upPw, null, null, null, 0, null));
-							System.out.println("새로운 비밀번호를 메일로 보냈습니다.");
+							tdao.delPw(pw);
+							System.out.println("비밀번호를 수정했습니다.");
 						}
 					} else {
 						// 번호 잘못 눌렀을 경우
@@ -122,11 +124,16 @@ public class LogMenu {
 				if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 					System.out.print("임시 비밀번호 발급받을 이메일 >>> ");
 					String email = scn.nextLine();
-					String upPw = "5080";
+					String updatePw = "";
+					for (int i = 0; i < 4; i++) {
+						updatePw += (int) (Math.random() * 9) + 1;
+					}
+					tdao.insertPw(updatePw);
+					
 					MailApp app = new MailApp();
-					app.sendMail("songj137@naver.com", email, "비밀번호 재설정", upPw);
+					app.sendMail("songj137@naver.com", email, "비밀번호 재설정", updatePw);
 
-					tdao.pwdUpdate(new Student(stuId, upPw, null, null, null, 0, null));
+					tdao.pwdUpdate(new Student(stuId, updatePw, null, null, null, 0, null));
 					System.out.println("새로운 비밀번호를 메일로 보냈습니다.");
 
 				} else {

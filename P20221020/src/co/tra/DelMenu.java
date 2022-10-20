@@ -19,7 +19,7 @@ public class DelMenu {
 		// 관리자 계정인지 확인
 		if (tdao.getMag(id).getMagId().equals(id)) {
 			while (!delLog) {
-				System.out.println("·········· 1. 과목 삭제 2. 회원 수강과목 삭제 3. 강사 삭제 4. 처음으로 ··········");
+				System.out.println("\n·········· 1. 과목 삭제 2. 회원 수강과목 삭제 3. 강사 삭제 4. 처음으로 ··········");
 				int deMenu = Util.checkMenu("입력 >>> ");
 
 				if (deMenu == 1) {
@@ -76,7 +76,7 @@ public class DelMenu {
 						List<Training> trains = tdao.traSearch();
 
 						for (Training tr : trains) {
-							if (tr.gettName().equals(tdao.getMag(magId).getMagName())) {
+							if (tr.gettName().equals(magId)) {
 								count = 1;
 							}
 						}

@@ -19,7 +19,7 @@ public class InsMenu {
 		// 관리자 계정인지 확인
 		if (tdao.getMag(id).getMagId().equals(id)) {
 			while (!insLog) {
-				System.out.println("·········· 1. 과목 등록 2. 회원 수강과목 등록 3. 처음으로 ··········");
+				System.out.println("\n·········· 1. 과목 등록 2. 회원 수강과목 등록 3. 처음으로 ··········");
 				int regMenu = Util.checkMenu("입력 >>> ");
 				if (regMenu == 1) {
 					// 1-1. 과목 등록 메뉴

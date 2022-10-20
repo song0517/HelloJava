@@ -19,15 +19,66 @@ public class SelMenu {
 		// 관리자 계정인지 확인
 		while (!selLog) {
 			System.out.println(
-					"·········· 1. 과목 전체 2. 회원 전체 3. 강사 전체 4. 특정 과목 조회 5. 과목별 수강 회원 조회 6. 특정 회원 조회 7. 작성한 댓글 확인 8. 처음으로 ··········");
+					"\n·········· 1. 과목 전체 2. 회원 전체 3. 강사 전체 4. 특정 과목 조회 5. 과목별 수강 회원 조회 6. 특정 회원 조회 7. 작성한 댓글 확인 8. 처음으로 ··········");
 			int selMenu = Util.checkMenu("입력 >>> ");
 			if (selMenu == 1) {
 				// 3-1
 				System.out.println("===과목 전체 조회===");
-				List<Training> trains = tdao.traSearch();
+				PagingVO pag = new PagingVO();
+
+				boolean check = false;
+				int total = tdao.countTra();
+				int nowPage = 0;
+				int cntPerPage = 0;
+				
+				System.out.println("=== 1page ===");
+				if (nowPage == 0 && cntPerPage == 0) {
+					nowPage = 1;
+					cntPerPage = 5;
+				} else if (nowPage == 0) {
+					nowPage = 1;
+				} else if (cntPerPage == 0) {
+					cntPerPage = 5;
+				}
+				pag = new PagingVO(total, nowPage, cntPerPage);
+
+				List<Training> trains = tdao.traList(pag);
 
 				for (Training tr : trains) {
 					System.out.println(tr.toString());
+				}
+
+				while (!check) {
+					nowPage = 0;
+					cntPerPage = 0;
+					int totalPage = (int) Math.ceil(total / 5.0);
+					System.out.println("\n 전체 페이지 : " + totalPage);
+					System.out.println("조회를 종료하고 싶을 경우 '0'을 입력해주세요.");
+					int num = Util.checkMenu("조회하고 싶은 페이지 >>> ");
+					
+					if (num > totalPage) {
+						System.out.println("총 페이지 수보다 많습니다.");
+					} else if (num == 0) {
+						System.out.println("조회를 종료합니다.");
+						check = true;
+					} else {
+						System.out.println("=== " + num + "page ===");
+						if (nowPage == 0 && cntPerPage == 0) {
+							nowPage = num;
+							cntPerPage = 5;
+						} else if (nowPage == 0) {
+							nowPage = num;
+						} else if (cntPerPage == 0) {
+							cntPerPage = 5;
+						}
+						pag = new PagingVO(total, nowPage, cntPerPage);
+
+						List<Training> trains2 = tdao.traList(pag);
+
+						for (Training tr : trains2) {
+							System.out.println(tr.toString());
+						}
+					}
 				}
 
 			} else if (selMenu == 2) {
@@ -36,10 +87,62 @@ public class SelMenu {
 
 				// 관리자 확인
 				if (tdao.getMag(id).getMagId().equals(id)) {
-					List<Student> stus = tdao.stuSearch();
+					// 페이징
+					PagingVO pag = new PagingVO();
+
+					boolean check = false;
+					int total = tdao.countStu();
+					int nowPage = 0;
+					int cntPerPage = 0;
+					
+					System.out.println("=== 1page ===");
+					if (nowPage == 0 && cntPerPage == 0) {
+						nowPage = 1;
+						cntPerPage = 5;
+					} else if (nowPage == 0) {
+						nowPage = 1;
+					} else if (cntPerPage == 0) {
+						cntPerPage = 5;
+					}
+					pag = new PagingVO(total, nowPage, cntPerPage);
+
+					List<Student> stus = tdao.stuSearch(pag);
 
 					for (Student st : stus) {
 						System.out.println(st.toString());
+					}
+
+					while (!check) {
+						nowPage = 0;
+						cntPerPage = 0;
+						int totalPage = (int) Math.ceil(total / 5.0);
+						System.out.println("\n 전체 페이지 : " + totalPage);
+						System.out.println("조회를 종료하고 싶을 경우 '0'을 입력해주세요.");
+						int num = Util.checkMenu("조회하고 싶은 페이지 >>> ");
+						
+						if (num > totalPage) {
+							System.out.println("총 페이지 수보다 많습니다.");
+						} else if (num == 0) {
+							System.out.println("조회를 종료합니다.");
+							check = true;
+						} else {
+							System.out.println("=== " + num + "page ===");
+							if (nowPage == 0 && cntPerPage == 0) {
+								nowPage = num;
+								cntPerPage = 5;
+							} else if (nowPage == 0) {
+								nowPage = num;
+							} else if (cntPerPage == 0) {
+								cntPerPage = 5;
+							}
+							pag = new PagingVO(total, nowPage, cntPerPage);
+
+							List<Student> stus2 = tdao.stuSearch(pag);
+
+							for (Student st : stus2) {
+								System.out.println(st.toString());
+							}
+						}
 					}
 				} else {
 					System.out.println("관리자 권한 페이지입니다.");
@@ -47,13 +150,12 @@ public class SelMenu {
 
 			} else if (selMenu == 3) {
 				System.out.println("===강사 전체 조회===");
-				mag = new Manager();
-				List<Manager> mags = tdao.magList(mag);
+				List<Manager> mags = tdao.magSearch();
 
 				for (Manager mg : mags) {
 					System.out.println("선생님ID : " + mg.getMagId() + ", 선생님 이름: " + mg.getMagName());
 				}
-
+				
 			} else if (selMenu == 4) {
 				// 3-3
 				System.out.println("===특정 과목 조회===");

@@ -7,10 +7,11 @@ import java.util.List;
 public class TrainingDAO extends DAO {
 
 	// 1. 관리자 테이블
+	//id, pw 비교
 	public List<Manager> magList(Manager mag) {
 		List<Manager> magList = new ArrayList<Manager>();
 		getConnect();
-		String sql = "select * from manager where mag_id like '%'||?||'%' and mag_pwd like '%'||?||'%'";
+		String sql = "select * from manager where mag_id like ? and mag_pwd like ?";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -29,6 +30,27 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 		return magList;
+	}
+	
+	//전체조회
+	public List<Manager> magSearch() {
+		String sql = "select * from manager";
+		conn = getConnect();
+		List<Manager> list = new ArrayList<Manager>();
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				list.add(new Manager(rs.getString("mag_id"), rs.getString("mag_pwd"), rs.getString("mag_name")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
 	}
 
 	// 강사조회
@@ -73,7 +95,7 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 	}
-	
+
 	public void magUpdate(String magId, String magId2) {
 		String sql = "update manager set mag_id = ? where mag_id = ?";
 		conn = getConnect();
@@ -110,15 +132,39 @@ public class TrainingDAO extends DAO {
 		return r;
 	}
 
-	// 2. 회원테이블
-	// 전체학생 조회
-	public List<Student> stuSearch() {
+	// id변경
+	public void idUpdate(Manager mag) {
+		String sql = "update manager set mag_name = ? where mag_id = ?";
 		conn = getConnect();
-		List<Student> list = new ArrayList<Student>();
 
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select * from student order by stu_id");
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mag.getMagName());
+			psmt.setString(2, mag.getMagId());
+
+			int r = psmt.executeUpdate();
+			System.out.println(r + "건 강사 변경 완료");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+
+	// 2. 회원테이블
+	// 전체학생 조회
+	public List<Student> stuSearch(PagingVO pag) {
+		conn = getConnect();
+		List<Student> list = new ArrayList<Student>();
+		String sql = "SELECT * \r\n" + "FROM (\r\n" + "SELECT ROWNUM RN, A.* \r\n" + "FROM (\r\n" + "SELECT * \r\n"
+				+ "FROM student \r\n" + "ORDER BY stu_id \r\n" + ") A\r\n" + ")\r\n" + "WHERE RN BETWEEN ? AND ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, pag.getStart());
+			psmt.setInt(2, pag.getEnd());
+
+			rs = psmt.executeQuery();
 
 			while (rs.next()) {
 				list.add(new Student(rs.getString("stu_id"), rs.getString("stu_pwd"), rs.getString("stu_name"),
@@ -131,6 +177,27 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 		return list;
+	}
+
+	// 학생 수 가져오기
+	public int countStu() {
+		conn = getConnect();
+		int cnt = 0;
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT COUNT(*) as cnt FROM student");
+
+			while (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return cnt;
+
 	}
 
 	// 회원 계정 로그인 확인
@@ -360,6 +427,53 @@ public class TrainingDAO extends DAO {
 			disconnect();
 		}
 		return list;
+	}
+
+	// 페이징 작업 사용
+	public List<Training> traList(PagingVO pag) {
+		conn = getConnect();
+		List<Training> list = new ArrayList<Training>();
+		String sql = "SELECT * \r\n" + "FROM (\r\n" + "SELECT ROWNUM RN, A.* \r\n" + "FROM (\r\n" + "SELECT * \r\n"
+				+ "FROM training \r\n" + "ORDER BY tra_id \r\n" + ") A\r\n" + ")\r\n" + "WHERE RN BETWEEN ? AND ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, pag.getStart());
+			psmt.setInt(2, pag.getEnd());
+
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				list.add(new Training(rs.getInt("tra_id"), rs.getString("tra_name"), rs.getString("t_name"),
+						rs.getString("tra_time"), rs.getString("tra_day"), rs.getInt("tra_stCo"),
+						rs.getInt("tra_checkCo")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+
+	public int countTra() {
+		conn = getConnect();
+		int cnt = 0;
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT COUNT(*) as cnt FROM training");
+
+			while (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return cnt;
+
 	}
 
 	// 과목 추가
@@ -593,6 +707,63 @@ public class TrainingDAO extends DAO {
 		} finally {
 			disconnect();
 		}
+	}
+
+	// 5. 임시 비밀번호 테이블
+	// 임시 비밀번호 추가
+	public void insertPw(String pw) {
+		String sql = "insert into pwcheck values (?)";
+		conn = getConnect();
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, pw);
+
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+
+	// 임시 비밀번호 조회
+	public String selPw(String pw) {
+		String sql = "select * from pwcheck where pwnum = ?";
+		conn = getConnect();
+		String pwck = "";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, pw);
+
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				pwck = rs.getString("pwnum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return pwck;
+	}
+	
+	// 임시 비밀번호 삭제
+	public void delPw(String pw) {
+		String sql = "delete from pwcheck where pwnum = ?";
+		conn = getConnect();
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, pw);
+
+			psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		} 
 	}
 
 }
