@@ -10,7 +10,7 @@ public class TrainingDAO extends DAO {
 	public List<Manager> magList(Manager mag) {
 		List<Manager> magList = new ArrayList<Manager>();
 		getConnect();
-		String sql = "select * from manager where mag_id like ? and mag_pwd like ?";
+		String sql = "select * from manager where mag_id like '%'||?||'%' and mag_pwd like '%'||?||'%'";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -67,6 +67,23 @@ public class TrainingDAO extends DAO {
 
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 완료");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void magUpdate(String magId, String magId2) {
+		String sql = "update manager set mag_id = ? where mag_id = ?";
+		conn = getConnect();
+		System.out.println(magId + " " + magId2);
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, magId2);
+			psmt.setString(2, magId);
+
+			int r = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

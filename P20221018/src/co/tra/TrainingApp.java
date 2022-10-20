@@ -13,15 +13,16 @@ public class TrainingApp {
 
 		Scanner scn = new Scanner(System.in);
 
-		boolean cklog = false;
 		String id = null;
 		String pw = null;
+		boolean cklog = false;
+
 		int check = 0;
 
 		// 처음 화면
 		while (!cklog) {
 			// 회원가입 & 로그인 메뉴
-			System.out.println("▶▶▶▶▶▶▶▶▶▶ 1.회원가입 2.로그인 3.종료 ◀◀◀◀◀◀◀◀◀◀");
+			System.out.println("▶▶▶▶▶▶▶▶▶▶ 1.회원가입 2.로그인 3. 비밀번호 찾기 4.종료 ◀◀◀◀◀◀◀◀◀◀");
 			int logmenu = Util.checkMenu("입력 >>> ");
 
 			// 1. 회원가입 과정
@@ -34,7 +35,7 @@ public class TrainingApp {
 					System.out.println("===관리자 계정 회원가입===");
 					System.out.print("관리자 ID 입력 >>> ");
 					String magId = scn.nextLine();
-					if (tdao.magSearch(magId).getMagId().equals(magId)) {
+					if (tdao.getMag(magId).getMagId().equals(magId)) {
 						System.out.println("동일한 관리자ID가 있습니다.");
 						continue;
 					} else {
@@ -86,14 +87,17 @@ public class TrainingApp {
 					System.out.print("관리자 PW 입력 >>> ");
 					pw = scn.nextLine();
 
-					check = tdao.magCheck(id, pw);
-					if (check == 1) {
+					mag = new Manager(id, pw, null);
+					List<Manager> mags = tdao.magList(mag);
+
+					if (mags.size() == 1) {
 						cklog = true;
 						System.out.println("관리자계정 로그인 완료.");
 					} else {
 						System.out.println("등록되어 있지 않은 정보입니다.");
 						continue;
 					}
+
 				} else if (accCkMenu == 2) {
 					// 2-2. 회원 계정 로그인
 					System.out.println("===회원 계정===");
@@ -106,6 +110,13 @@ public class TrainingApp {
 					if (check == 1) {
 						cklog = true;
 						System.out.println("회원계정 로그인 완료.");
+						if (pw.equals("5080")) {
+							System.out.println("===임시 비밀번호를 수정해 주세요.===");
+							System.out.print("수정할 비밀번호 >>> ");
+							String upPw = scn.nextLine();
+							tdao.pwdUpdate(new Student(id, upPw, null, null, null, 0, null));
+							System.out.println("새로운 비밀번호를 메일로 보냈습니다.");
+						}
 					} else {
 						// 번호 잘못 눌렀을 경우
 						System.out.println("등록되어 있지 않은 정보입니다.");
@@ -116,6 +127,25 @@ public class TrainingApp {
 					continue;
 				}
 			} else if (logmenu == 3) {
+				System.out.println("===비밀번호 재발급===");
+				System.out.print("ID >>> ");
+				String stuId = scn.nextLine();
+				if (tdao.getStu(stuId).getStuId().equals(stuId)) {
+					System.out.print("임시 비밀번호 발급받을 이메일 >>> ");
+					String email = scn.nextLine();
+					String upPw = "5080";
+					MailApp app = new MailApp();
+					app.sendMail("songj137@naver.com", email, "비밀번호 재설정", upPw);
+
+					tdao.pwdUpdate(new Student(stuId, upPw, null, null, null, 0, null));
+					System.out.println("새로운 비밀번호를 메일로 보냈습니다.");
+					continue;
+
+				} else {
+					System.out.println("해당 ID가 없습니다.");
+					continue;
+				}
+			} else if (logmenu == 4) {
 				// 3. 종료
 				System.out.println("프로그램을 종료합니다.");
 				break;
@@ -130,12 +160,13 @@ public class TrainingApp {
 				int mainMenu = Util.checkMenu("입력 >>> ");
 
 				// 1. 등록 메뉴
-
 				if (mainMenu == 1) {
 					System.out.println("===등록메뉴===");
 					// 관리자 계정인지 확인
-					check = tdao.magCheck(id, pw);
-					if (check == 1) {
+					mag = new Manager(id, pw, null);
+					List<Manager> mags = tdao.magList(mag);
+
+					if (mags.size() == 1) {
 						System.out.println("▶▶▶▶▶▶▶▶▶▶ 1. 과목 등록 2. 회원 수강과목 등록 ◀◀◀◀◀◀◀◀◀◀");
 						int regMenu = Util.checkMenu("입력 >>> ");
 						if (regMenu == 1) {
@@ -151,8 +182,8 @@ public class TrainingApp {
 							System.out.print("강사 ID 입력 >>> ");
 							String magId = scn.nextLine();
 
-							if (tdao.magSearch(magId).getMagId().equals(magId)) {
-								String tName = tdao.magSearch(magId).getMagName();
+							if (tdao.getMag(magId).getMagId().equals(magId)) {
+								String tName = tdao.getMag(magId).getMagName();
 								System.out.print("교육 시간 입력 >>> ");
 								String traTime = scn.nextLine();
 								System.out.print("교육 요일 입력 >>> ");
@@ -192,10 +223,10 @@ public class TrainingApp {
 							System.out.println("올바른 메뉴 번호가 아닙니다.");
 						}
 					} else {
-						// 관리자 계정이 아닐경우
 						System.out.println("관리자 권한 페이지입니다.");
 						continue;
 					}
+
 				} else if (mainMenu == 2) {
 					// 2. 수정메뉴
 					System.out.println("===수정메뉴===");
@@ -207,14 +238,16 @@ public class TrainingApp {
 						System.out.println("===과목 정보 변경===");
 
 						// 관리자가 맞는지 확인 후 실행
-						check = tdao.magCheck(id, pw);
-						if (check == 1) {
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
+						if (mags.size() == 1) {
 							int traId = Util.checkMenu("변경할 과목ID >>> ");
 							System.out.print("변경할 강사 ID >>> ");
 							String magId = scn.nextLine();
 
-							if (tdao.magSearch(magId).getMagId().equals(magId)) {
-								String tName = tdao.magSearch(magId).getMagName();
+							if (tdao.getMag(magId).getMagId().equals(magId)) {
+								String tName = tdao.getMag(magId).getMagName();
 								tra = new Training(traId, null, tName, null, null, 0, 0);
 								if (tdao.tNameUpdate(tra) == 1) {
 									System.out.println("강사 변경이 완료되었습니다.");
@@ -232,8 +265,10 @@ public class TrainingApp {
 						System.out.println("===회원 수강 과목 변경===");
 
 						// 관리자가 맞는지 확인 후 실행
-						check = tdao.magCheck(id, pw);
-						if (check == 1) {
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
+						if (mags.size() == 1) {
 							System.out.print("변경할 회원ID >>> ");
 							String stuId = scn.nextLine();
 							String name = tdao.getStu(stuId).getStuId();
@@ -269,6 +304,9 @@ public class TrainingApp {
 						// 2-3
 						System.out.println("===회원정보 변경===");
 
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
 						if (tdao.stuCheck(id, pw) == 1) {
 							System.out.print("수정할 연락처 >>> ");
 							String stuPhone = scn.nextLine();
@@ -276,7 +314,7 @@ public class TrainingApp {
 							tdao.phoneUpdate(stu);
 							System.out.println("연락처 변경 완료");
 
-						} else if (tdao.magCheck(id, pw) == 1) {
+						} else if (mags.size() == 1) {
 							System.out.print("수정하고 싶은 회원ID >>> ");
 							String stuId = scn.nextLine();
 							if (tdao.getStu(stuId).getStuId().equals(stuId)) {
@@ -310,8 +348,10 @@ public class TrainingApp {
 						System.out.println("===회원 전체 조회===");
 
 						// 관리자 확인
-						check = tdao.magCheck(id, pw);
-						if (check == 1) {
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
+						if (mags.size() == 1) {
 							List<Student> stus = tdao.stuSearch();
 
 							for (Student st : stus) {
@@ -320,9 +360,11 @@ public class TrainingApp {
 						} else {
 							System.out.println("관리자 권한 페이지입니다.");
 						}
+
 					} else if (selMenu == 3) {
 						System.out.println("===강사 전체 조회===");
-						List<Manager> mags = tdao.magAll();
+						mag = new Manager(null, null, null);
+						List<Manager> mags = tdao.magList(mag);
 
 						for (Manager mg : mags) {
 							System.out.println("선생님ID : " + mg.getMagId() + ", 선생님 이름: " + mg.getMagName());
@@ -382,8 +424,10 @@ public class TrainingApp {
 					} else if (selMenu == 5) {
 						System.out.println("===과목별 수강 회원 조회===");
 
-						check = tdao.magCheck(id, pw);
-						if (check == 1) {
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
+						if (mags.size() == 1) {
 							int traId = Util.checkMenu("조회하고 싶은 과목ID 입력>>> ");
 							if (tdao.traNameSearch(traId).getTraId() == traId) {
 
@@ -403,12 +447,15 @@ public class TrainingApp {
 						// 3-6
 						System.out.println("===특정 회원 조회===");
 
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
 						if (tdao.stuCheck(id, pw) == 1) {
 							System.out.println(tdao.getStu(id));
-						} else if (tdao.magCheck(id, pw) == 1) {
+						} else if (mags.size() == 1) {
 							System.out.print("조회하고 싶은 회원ID >>> ");
 							String stuId = scn.nextLine();
-							
+
 							if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 								System.out.println(tdao.getStu(stuId));
 							} else {
@@ -419,7 +466,11 @@ public class TrainingApp {
 					} else if (selMenu == 7) {
 						// 3-7
 						System.out.println("===자신이 작성한 후기 조회===");
-						if (tdao.magCheck(id, pw) == 1) {
+
+						mag = new Manager(id, pw, null);
+						List<Manager> mags = tdao.magList(mag);
+
+						if (mags.size() == 1) {
 							System.out.println("관계자는 후기가 없습니다.");
 						} else {
 							List<TraReply> trReply = tdao.reWrSearch(id);
@@ -479,8 +530,10 @@ public class TrainingApp {
 					System.out.println("===삭제 메뉴===");
 
 					// 관리자 확인.
-					check = tdao.magCheck(id, pw);
-					if (check == 1) {
+					mag = new Manager(id, pw, null);
+					List<Manager> mags = tdao.magList(mag);
+
+					if (mags.size() == 1) {
 						System.out.println("▶▶▶▶▶▶▶▶▶▶ 1. 과목 삭제 2. 회원 수강과목 삭제 3. 강사 삭제 ◀◀◀◀◀◀◀◀◀◀");
 						int deMenu = Util.checkMenu("입력 >>> ");
 
@@ -542,11 +595,11 @@ public class TrainingApp {
 										count = 1;
 									}
 								}
-								
-								if(count == 1) {
+
+								if (count == 1) {
 									System.out.println("수업 중인 과목이 있어 삭제할 수 없습니다.");
 								}
-								
+
 								if (count == 0) {
 									if (tdao.magDelete(magId) == 1) {
 										System.out.println("삭제가 완료되었습니다.");
@@ -561,6 +614,7 @@ public class TrainingApp {
 					} else {
 						System.out.println("관리자 권한 페이지입니다.");
 					}
+
 				} else if (mainMenu == 9) {
 					// 9. 종료
 					System.out.println("종료");

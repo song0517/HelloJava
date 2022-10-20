@@ -12,7 +12,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/송지은/Downloads/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/Dev/ojdbc6_g.jar"/>
 	<classpathentry kind="lib" path="C:/Dev/mail-1.4.7.jar"/>
 	<classpathentry kind="lib" path="C:/Dev/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Dev/javaSDK-2.2.jar"/>
