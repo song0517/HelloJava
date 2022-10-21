@@ -23,17 +23,19 @@ public class UpdMenu {
 				int updMenu = Util.checkMenu("입력 >>> ");
 
 				if (updMenu == 1) {
-					// 2-1
+					// 2-1 과목 정보 변경
 					System.out.println("===과목 정보 변경===");
 
 					if (tdao.getMag(id).getMagId().equals(id)) {
 						int traId = Util.checkMenu("변경할 과목ID >>> ");
 						System.out.print("변경할 강사 ID >>> ");
 						String magId = scn.nextLine();
-
+						
+						// 강사ID 확인
 						if (tdao.getMag(magId).getMagId().equals(magId)) {
 							String tName = tdao.getMag(magId).getMagName();
 							tra = new Training(traId, null, tName, null, null, 0, 0);
+							// 과목ID 확인
 							if (tdao.tNameUpdate(tra) == 1) {
 								System.out.println("강사 변경이 완료되었습니다.");
 							} else {
@@ -46,20 +48,23 @@ public class UpdMenu {
 						System.out.println("관리자 권한 페이지입니다.");
 					}
 				} else if (updMenu == 2) {
-					// 2-2
+					// 2-2 회원수강과목 변경
 					System.out.println("===회원 수강 과목 변경===");
 					// 관리자가 맞는지 확인 후 실행
 					if (tdao.getMag(id).getMagId().equals(id)) {
 						System.out.print("변경할 회원ID >>> ");
 						String stuId = scn.nextLine();
 						String name = tdao.getStu(stuId).getStuId();
+						// 학생ID 확인
 						if (name.equals(stuId) && !name.equals(null)) {
 							int traId1 = tdao.getStu(stuId).getTraId();
 							int traId2 = Util.checkMenu("변경할 과목ID >>> ");
-//							int traId2 = Integer.parseInt(scn.nextLine());
-
+							
+							//과목ID 확인
 							if (tdao.traNameSearch(traId2).getTraId() == traId2) {
+								// 수강과목같은지 확인
 								if (traId1 != traId2) {
+									// 잔여 인원 체크
 									if (tdao.pluCount(traId2) == 1) {
 										tdao.delCount(traId1);
 										String traName = tdao.traNameCheck(traId2);
@@ -69,7 +74,6 @@ public class UpdMenu {
 										
 									} else {
 										System.out.println("수강 인원이 초과하여 등록할 수 없습니다.");
-//										continue;
 									}
 								} else {
 									System.out.println("수강과목이 같습니다.");
@@ -84,9 +88,10 @@ public class UpdMenu {
 						System.out.println("관리자 권한 페이지입니다.");
 					}
 				} else if (updMenu == 3) {
-					// 2-3
+					// 2-3 회원정보 변경
 					System.out.println("===회원정보 변경===");
-
+					
+					// 회원계정일 경우 자신의 번호만 수정
 					if (tdao.getStu(id).getStuId().equals(id)) {
 						System.out.print("수정할 연락처 >>> ");
 						String stuPhone = scn.nextLine();
@@ -95,8 +100,10 @@ public class UpdMenu {
 						System.out.println("연락처 변경 완료");
 
 					} else if (tdao.getMag(id).getMagId().equals(id)) {
+						// 관리자계정일 경우 회원ID입력
 						System.out.print("수정하고 싶은 회원ID >>> ");
 						String stuId = scn.nextLine();
+						//회원ID 확인
 						if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 							System.out.print("수정할 연락처 >>> ");
 							String stuPhone = scn.nextLine();
@@ -109,6 +116,7 @@ public class UpdMenu {
 						}
 					} 
 				} else if (updMenu == 4) {
+					//2-4 처음으로
 					System.out.println("처음으로 이동합니다.");
 					updLog = true;
 				} else {

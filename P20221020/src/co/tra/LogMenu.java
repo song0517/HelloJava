@@ -31,6 +31,7 @@ public class LogMenu {
 					System.out.println("===관리자 계정 회원가입===");
 					System.out.print("관리자 ID 입력 >>> ");
 					String magId = scn.nextLine();
+					// 동일 ID확인
 					if (tdao.getMag(magId).getMagId().equals(magId)) {
 						System.out.println("동일한 관리자ID가 있습니다.");
 					} else {
@@ -48,6 +49,7 @@ public class LogMenu {
 					System.out.println("===회원 계정 회원가입===");
 					System.out.print("회원 ID 입력 >>> ");
 					String stuId = scn.nextLine();
+					// 동일ID확인
 					if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 						System.out.println("동일한 학생ID가 있습니다.");
 					} else {
@@ -102,6 +104,7 @@ public class LogMenu {
 					if (check == 1) {
 						cklog = true;
 						System.out.println("회원계정 로그인 완료.");
+						//임시 비밀번호 중 같은 것이 있을 경우 바로 비밀번호 수정
 						if (tdao.selPw(pw).equals(pw)) {
 							System.out.println("===임시 비밀번호를 수정해 주세요.===");
 							System.out.print("수정할 비밀번호 >>> ");
@@ -121,15 +124,18 @@ public class LogMenu {
 				System.out.println("===비밀번호 재발급===");
 				System.out.print("ID >>> ");
 				String stuId = scn.nextLine();
+				// 회원 계정 ID 확인
 				if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 					System.out.print("임시 비밀번호 발급받을 이메일 >>> ");
 					String email = scn.nextLine();
 					String updatePw = "";
+					// 임시번호 숫자 4개 발급
 					for (int i = 0; i < 4; i++) {
 						updatePw += (int) (Math.random() * 9) + 1;
 					}
 					tdao.insertPw(updatePw);
 					
+					// 이메일 발송
 					MailApp app = new MailApp();
 					app.sendMail("songj137@naver.com", email, "비밀번호 재설정", updatePw);
 

@@ -16,21 +16,23 @@ public class DelMenu {
 		boolean delLog = false;
 
 		System.out.println("===삭제 메뉴===");
-		// 관리자 계정인지 확인
+		// 관리자(선생님) 계정인지 확인
 		if (tdao.getMag(id).getMagId().equals(id)) {
 			while (!delLog) {
 				System.out.println("\n·········· 1. 과목 삭제 2. 회원 수강과목 삭제 3. 강사 삭제 4. 처음으로 ··········");
 				int deMenu = Util.checkMenu("입력 >>> ");
 
 				if (deMenu == 1) {
-					// 4-1
+					// 4-1 과목 삭제
 					System.out.println("===과목 삭제===");
 					int traId = Util.checkMenu("삭제하고 싶은 과목ID를 입력하세요. >>> ");
-
+					
+					// 다시 물어보기
 					System.out.println("'" + traId + "번' 과목을 삭제하시겠습니까?");
 					int magCheck = Util.checkMenu("·········· 1. 예 2.아니요 >>> ");
 
 					if (magCheck == 1) {
+						//과목 아이디확인
 						if (tdao.traDelete(traId) == 1) {
 							tdao.stuDelete(traId);
 							tdao.trrDelete(traId);
@@ -43,7 +45,7 @@ public class DelMenu {
 					}
 
 				} else if (deMenu == 2) {
-					// 4-2
+					// 4-2 회원 수강과목 삭제
 					System.out.println("===회원 수강과목 삭제===");
 					System.out.print("삭제할 회원ID 입력 >>> ");
 					String stuId = scn.nextLine();
@@ -55,6 +57,7 @@ public class DelMenu {
 						stu = new Student(stuId, null, null, null, null, 0, "");
 						int traId = tdao.getStu(stuId).getTraId();
 						tdao.delCount(traId);
+						// 회원 계정ID 확인
 						if (tdao.stuUpdate(stu) == 1) {
 							System.out.println("삭제가 완료되었습니다.");
 						} else {
@@ -64,6 +67,7 @@ public class DelMenu {
 						System.out.println("처음화면으로 돌아갑니다.");
 					}
 				} else if (deMenu == 3) {
+					// 4-3 강사 계정 삭제
 					System.out.println("===강사 계정 삭제===");
 					System.out.print("삭제할 강사ID 입력 >>> ");
 					String magId = scn.nextLine();
@@ -74,18 +78,20 @@ public class DelMenu {
 
 					if (magCheck == 1) {
 						List<Training> trains = tdao.traSearch();
-
+						
+						// 수업 중인 과목 있는지 확인
 						for (Training tr : trains) {
-							if (tr.gettName().equals(magId)) {
+							if (tr.gettName().equals(tdao.getMag(magId).getMagName())) {
 								count = 1;
 							}
 						}
-
+						
 						if (count == 1) {
 							System.out.println("수업 중인 과목이 있어 삭제할 수 없습니다.");
 						}
 
 						if (count == 0) {
+							// 관리자(선생님) 계정 확인
 							if (tdao.magDelete(magId) == 1) {
 								System.out.println("삭제가 완료되었습니다.");
 							} else {

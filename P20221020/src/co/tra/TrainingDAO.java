@@ -88,7 +88,6 @@ public class TrainingDAO extends DAO {
 			psmt.setString(3, mag.getMagName());
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

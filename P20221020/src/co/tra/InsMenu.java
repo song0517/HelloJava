@@ -25,6 +25,7 @@ public class InsMenu {
 					// 1-1. 과목 등록 메뉴
 					System.out.println("===과목 등록===");
 					int traId = Util.checkMenu("과목 ID 입력 >>> ");
+					// 동일한 과목 있는지 확인
 					if (tdao.traNameSearch(traId).getTraId() == traId) {
 						System.out.println("동일한 과목ID가 있습니다.");
 					} else {
@@ -32,7 +33,8 @@ public class InsMenu {
 						String traName = scn.nextLine();
 						System.out.print("강사 ID 입력 >>> ");
 						String magId = scn.nextLine();
-
+						
+						//강사 ID 있는지 확인
 						if (tdao.getMag(magId).getMagId().equals(magId)) {
 							String tName = tdao.getMag(magId).getMagName();
 							System.out.print("교육 시간 입력 >>> ");
@@ -54,13 +56,14 @@ public class InsMenu {
 					System.out.println("===회원 수강과목 등록===");
 					System.out.print("등록할 회원ID >>> ");
 					String stuId = scn.nextLine();
-
+					
+					// 회원 계정 확인
 					if (tdao.getStu(stuId).getStuId().equals(stuId)) {
 						int traId = Util.checkMenu("수강신청할 과목ID >>> ");
 
 						// ID에 맞는 수강과목 찾기
 						String traName = tdao.traNameCheck(traId);
-						
+						// 수강과목 ID가 없을 경우
 						if(traName == null) {
 							System.out.println("해당 과목ID는 없습니다. ");
 							continue;
