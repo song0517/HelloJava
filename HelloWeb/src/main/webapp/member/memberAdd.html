@@ -7,7 +7,8 @@
 
 <body>
     <!-- 사원번호, last_name, email, hire_date, job_id -->
-    <form action="../addMemberServlet">
+    <!-- addMemberServlet 실행, 경로설정(../->상위경로) -->
+    <form action="../addMemberServlet" method = "post">
         <label for="employee_id"> 사원번호
             <input type="text" name = "employee_id" id="employee_id">
         </label><br>

@@ -5,6 +5,19 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>HelloWeb</display-name>
 	
+	<!-- 서블릿의 이름을 first이지만 실행 클래스는 FirstServlet  -->
+	<servlet>
+		<servlet-name>front</servlet-name>
+		<servlet-class>co.edu.FrontController</servlet-class>
+	</servlet>
+	
+	<!-- first를 따라가면 FirsetServlet이다. -->
+	<servlet-mapping>
+		<servlet-name>front</servlet-name>
+		<!-- 주소창 뒤에 .do일 경우 모두 front실행 -> 위로 올라가면 모두 co.edu.FrontController 실행한다는 의미 -->
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

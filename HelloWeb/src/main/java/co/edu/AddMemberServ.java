@@ -22,6 +22,7 @@ public class AddMemberServ extends HttpServlet {
 	}
 
 	// 사용자의 요청 방식, IP주소 등(주소창을 치면) : request, 응답 정보 (처리된 서버 상태 등) : response
+	// get방식의 요청이 들어오면 실행 - 톰캣이 자동으로 처리
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -53,10 +54,14 @@ public class AddMemberServ extends HttpServlet {
 		
 		out.print("<a href=\"member/memberAdd.html\">처음으로</a>");
 	}
-
+	
+	// post방식의 요청이 들어오면 실행 - 톰캣이 자동으로 처리
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		response.setContentType("text/html;charset=UTF-8");
+//		doGet(request, response);
+		// 사용자의 브라우저(출력스트림 생성)
+		PrintWriter out = response.getWriter(); 
+		out.print("<h3>Post 방식의 요청</h3>");
 	}
-
 }
