@@ -35,4 +35,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> memberList() {
 		return dao.memberList();
 	}
+
+	@Override
+	public MemberVO login(String id, String passwd) {
+		return dao.login(id, passwd);
+	}
 }

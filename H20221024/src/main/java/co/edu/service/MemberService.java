@@ -20,4 +20,7 @@ public interface MemberService {
 	
 	// 멤버 전체 조회
 	public List<MemberVO> memberList();
+	
+	// 로그인처리
+	public MemberVO login(String id, String passwd);
 }

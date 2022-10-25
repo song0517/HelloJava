@@ -5,6 +5,7 @@ public class MemberVO {
 	private String passwd;
 	private String name;
 	private String email;
+	private String resposibility;
 	
 	public MemberVO() {
 	}
@@ -14,6 +15,14 @@ public class MemberVO {
 		this.passwd = passwd;
 		this.name = name;
 		this.email = email;
+	}
+	
+	public MemberVO(String id, String passwd, String name, String email, String resposibility) {
+		this.id = id;
+		this.passwd = passwd;
+		this.name = name;
+		this.email = email;
+		this.resposibility = resposibility;
 	}
 
 	public String getId() {
@@ -43,10 +52,23 @@ public class MemberVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	
+
+	public String getResposibility() {
+		return resposibility;
+	}
+
+	public void setResposibility(String resposibility) {
+		this.resposibility = resposibility;
+	}
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", passwd=" + passwd + ", name=" + name + ", email=" + email;
+		return "MemberVO [id=" + id + ", passwd=" + passwd + ", name=" + name + ", email=" + email + ", resposibility="
+				+ resposibility + "]";
 	}
+
+	
 	
 }
