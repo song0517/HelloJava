@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.board.BoardVO;
+import co.edu.board.FaqVO;
 import co.edu.common.DAO;
 
 public class BoardDAO extends DAO {
@@ -222,5 +223,41 @@ public class BoardDAO extends DAO {
 			disconnect();
 		}
 		return list;
+	}
+	
+	public List<FaqVO> faqList(FaqVO vo) {
+		List<FaqVO> list = new ArrayList<>();
+		getConnect();
+		String sql = "select * from faq_board " + "where 1=1 " //
+				+ "and title like '%'||?||'%' "//
+				+ "and content like '%'||?||'%' "//
+				+ "and writer like '%'||?||'%' ";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getTitle());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getWriter());
+
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				FaqVO faq = new FaqVO();
+				faq.setFaqNo(rs.getInt("faq_no"));
+				faq.setTitle(rs.getString("title"));
+				faq.setContent(rs.getString("content"));
+				faq.setWriter(rs.getString("writer"));
+				faq.setWriteDate(rs.getString("write_date"));
+				faq.setClickCnt(rs.getInt("click_cnt"));
+
+				list.add(faq);
+			}
+			return list;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return null;
 	}
 }

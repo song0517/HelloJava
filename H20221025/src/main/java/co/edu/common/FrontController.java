@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.edu.control.BulletinControl;
+import co.edu.control.FaqControl;
 import co.edu.control.MainControl;
 import co.edu.control.SearchBoard;
 import co.edu.control.WriteBoard;
@@ -48,6 +49,9 @@ public class FrontController extends HttpServlet{
 		//등록
 		controlList.put("/writeBoardForm.do", new WriteForm());
 		controlList.put("/writeBoard.do", new WriteBoard());
+		
+		//FAQ
+		controlList.put("/faq.do", new FaqControl());
 	}
 	
 	//service()

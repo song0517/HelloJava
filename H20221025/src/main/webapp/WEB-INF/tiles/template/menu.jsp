@@ -10,6 +10,6 @@
     			class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a> <a
     			class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a> <a
     			class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a> <a
-    			class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+    			class="list-group-item list-group-item-action list-group-item-light p-3" href="faq.do">자주묻는질문(FAQ)</a>
     	</div>
     </div>

@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardVO {
-	private int boardNo;
+public class FaqVO {
+	private int FaqNo;
 	private String title;
 	private String content;
 	private String writer;
 	private String writeDate; // 2020-11-23
 	private int clickCnt;
-	private String image;
-	
 }

@@ -3,6 +3,7 @@ package co.edu.service;
 import java.util.List;
 
 import co.edu.board.BoardVO;
+import co.edu.board.FaqVO;
 import co.edu.dao.BoardDAO;
 
 //메소드만 있는 기능
@@ -38,6 +39,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> pageList(int page) {
 		return dao.pageList(page);
+	}
+
+	@Override
+	public List<FaqVO> getFaqList(FaqVO faq) {
+		return dao.faqList(faq);
 	}
 	
 }
