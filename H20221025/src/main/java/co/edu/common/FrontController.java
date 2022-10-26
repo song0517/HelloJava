@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import co.edu.control.BulletinControl;
 import co.edu.control.MainControl;
+import co.edu.control.SearchBoard;
+import co.edu.control.WriteBoard;
+import co.edu.control.WriteForm;
 
 public class FrontController extends HttpServlet{
 	
@@ -34,6 +38,16 @@ public class FrontController extends HttpServlet{
 		controlList = new HashMap<String, Control>();
 		
 		controlList.put("/main.do", new MainControl());
+		
+		//게시판
+		controlList.put("/bulletin.do", new BulletinControl());
+		
+		//한건조회
+		controlList.put("/searchBoard.do", new SearchBoard());
+		
+		//등록
+		controlList.put("/writeBoardForm.do", new WriteForm());
+		controlList.put("/writeBoard.do", new WriteBoard());
 	}
 	
 	//service()

@@ -12,17 +12,17 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO insertBoard(BoardVO vo) {
-		return null;
+		return dao.insertBoard(vo);
 	}
 
 	@Override
 	public List<BoardVO> getList(BoardVO vo) {
-		return null;
+		return dao.boardList(vo);
 	}
 
 	@Override
 	public BoardVO findBoard(int boardNo) {
-		return null;
+		return dao.searchBoard(boardNo);
 	}
 
 	@Override
@@ -33,6 +33,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean deleteBoard(int boardNo) {
 		return false;
+	}
+
+	@Override
+	public List<BoardVO> pageList(int page) {
+		return dao.pageList(page);
 	}
 	
 }

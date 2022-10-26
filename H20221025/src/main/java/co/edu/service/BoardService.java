@@ -20,4 +20,7 @@ public interface BoardService {
 	
 	//삭제
 	public boolean deleteBoard(int boardNo);
+	
+	//페이지
+	public List<BoardVO> pageList(int page);
 }

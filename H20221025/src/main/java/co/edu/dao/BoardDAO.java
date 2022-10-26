@@ -14,7 +14,7 @@ public class BoardDAO extends DAO {
 		// 입력처리 중 에러가 발생하면 -> null;
 		getConnect();
 		String sql = "select board_seq.nextval from dual";
-		String sql2 = "insert into tbl_board(board_no, title, content, writer) values(?, ?, ?, ?)";
+		String sql2 = "insert into tbl_board(board_no, title, content, writer, image) values(?, ?, ?, ?, ?)";
 
 		try {
 			// 시퀀스값 가져오기
@@ -31,6 +31,7 @@ public class BoardDAO extends DAO {
 			psmt.setString(2, vo.getTitle());
 			psmt.setString(3, vo.getContent());
 			psmt.setString(4, vo.getWriter());
+			psmt.setString(5, vo.getImage());
 
 			int r = psmt.executeUpdate();
 			if (r > 0) {
@@ -158,5 +159,68 @@ public class BoardDAO extends DAO {
 			disconnect();
 		}
 		return false;
+	}
+	
+	// 페이지. 전체건수 기준으로 10개씩 자르기, 검색결과 전체건수/10개씩
+	// 전체건수
+	public int totalCnt() {
+		getConnect();
+		String sql = "select count(1) from tbl_board";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				//가지고 온 컬럼의 순서로 표시
+				int cnt = rs.getInt(1);
+				return cnt;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
+	}
+	// 페이지값
+	public List<BoardVO> pageList(int page) {
+		getConnect();
+		List<BoardVO> list = new ArrayList<>();
+		String sql = "select b.* "
+				+ "from (select rownum rn, a.* "
+				+ "      from (select * "
+				+ "            from tbl_board "
+				+ "            order by board_no desc) a "
+				+ "      where rownum <= ?) b "
+				+ "where b.rn >= ?";
+		
+		int from = (page-1) * 10 + 1; // 1, 11
+		int to = (page * 10); // 10, 20
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, to);
+			psmt.setInt(2, from);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setBoardNo(rs.getInt("board_no"));
+				board.setTitle(rs.getString("title"));
+				board.setContent(rs.getString("content"));
+				board.setWriter(rs.getString("writer"));
+				board.setWriteDate(rs.getString("write_date"));
+				board.setClickCnt(rs.getInt("click_cnt"));
+				board.setImage(rs.getString("image"));
+				
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
 	}
 }
