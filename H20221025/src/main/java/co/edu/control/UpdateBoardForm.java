@@ -1,4 +1,4 @@
-package co.edu;
+package co.edu.control;
 
 import java.io.IOException;
 
@@ -6,11 +6,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ThirdImpl implements Command {
+import co.edu.common.Control;
+import co.edu.common.HttpUtil;
+
+public class UpdateBoardForm implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("ThirdImpl() 실행됨.");
+		HttpUtil.forward(req, resp, "bulletin/updateBulletin.tiles");
+
 	}
 
 }
