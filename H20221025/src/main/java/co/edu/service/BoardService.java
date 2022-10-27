@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.edu.board.BoardVO;
 import co.edu.board.FaqVO;
+import co.edu.board.MemberVO;
 
 //기능만 정의
 public interface BoardService {
@@ -24,6 +25,15 @@ public interface BoardService {
 	
 	//페이지
 	public List<BoardVO> pageList(int page);
+	
+	//회원가입
+	public MemberVO insertMember(MemberVO vo);
+	
+	//로그인
+	public MemberVO login(String id, String passwd);
+	
+	//회원목록보기
+	public List<MemberVO> memberList();
 	
 	//FAQ
 	public List<FaqVO> getFaqList(FaqVO faq);

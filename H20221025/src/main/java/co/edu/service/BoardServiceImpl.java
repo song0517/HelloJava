@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.edu.board.BoardVO;
 import co.edu.board.FaqVO;
+import co.edu.board.MemberVO;
 import co.edu.dao.BoardDAO;
 
 //메소드만 있는 기능
@@ -44,6 +45,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<FaqVO> getFaqList(FaqVO faq) {
 		return dao.faqList(faq);
+	}
+
+	@Override
+	public MemberVO insertMember(MemberVO vo) {
+		return dao.insertMember(vo);
+	}
+
+	@Override
+	public List<MemberVO> memberList() {
+		return dao.memberList();
+	}
+
+	@Override
+	public MemberVO login(String id, String passwd) {
+		return dao.login(id, passwd);
 	}
 	
 }

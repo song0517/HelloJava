@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FaqVO {
-	private int FaqNo;
+	private int faqNo;
 	private String title;
 	private String content;
 	private String writer;

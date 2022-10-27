@@ -4,18 +4,41 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
-	<title>Simple Sidebar - Start Bootstrap Template</title>
-	<!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="css/styles.css" rel="stylesheet" />
-</head>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<title>Simple Sidebar - Start Bootstrap Template</title>
+		<!-- Favicon-->
+		<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+		<!-- Core theme CSS (includes Bootstrap)-->
+		<link href="css/styles.css" rel="stylesheet" />
+		<style>
+			.pagination {
+			  display: inline-block;
+			}
+			
+			.pagination a {
+			  color: black;
+			  float: left;
+			  padding: 8px 16px;
+			  text-decoration: none;
+			}
+			
+			.pagination a.active {
+			  background-color: #4CAF50;
+			  color: white;
+			  border-radius: 5px;
+			}
+			
+			.pagination a:hover:not(.active) {
+			  background-color: #ddd;
+			  border-radius: 5px;
+			}
+		</style>
+	</head>
 <body>
 	<div class="d-flex" id="wrapper">
 		<!-- jsp가져오기 -->

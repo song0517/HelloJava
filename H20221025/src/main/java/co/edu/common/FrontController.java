@@ -15,7 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import co.edu.control.BulletinControl;
 import co.edu.control.FaqControl;
 import co.edu.control.MainControl;
+import co.edu.control.MemberList;
 import co.edu.control.SearchBoard;
+import co.edu.control.SignIn;
+import co.edu.control.SignInForm;
+import co.edu.control.SignOut;
+import co.edu.control.SignUp;
+import co.edu.control.SignUpForm;
 import co.edu.control.WriteBoard;
 import co.edu.control.WriteForm;
 
@@ -50,6 +56,20 @@ public class FrontController extends HttpServlet{
 		controlList.put("/writeBoardForm.do", new WriteForm());
 		controlList.put("/writeBoard.do", new WriteBoard());
 		
+		//회원가입
+		controlList.put("/signUpForm.do", new SignUpForm()); //회원가입화면
+		controlList.put("/signUp.do", new SignUp()); //회원가입처리(DB입력 후 "회원가입되었습니다")
+		
+		// 로그인
+		controlList.put("/signInForm.do", new SignInForm()); //로그인화면
+		controlList.put("/signIn.do", new SignIn()); //로그인처리
+		
+		// 로그아웃
+		controlList.put("/signOut.do", new SignOut());
+		
+		//회원목록
+		controlList.put("/memberList.do",  new MemberList());
+		
 		//FAQ
 		controlList.put("/faq.do", new FaqControl());
 	}
@@ -57,6 +77,10 @@ public class FrontController extends HttpServlet{
 	//service()
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//한글은 utf-8로 처리하겠다!
+		req.setCharacterEncoding(charset); //한글처리.
+		resp.setCharacterEncoding(charset); //한글
+		
 		String uri = req.getRequestURI(); // http://localhost:8081/H20221025/main.do
 		String context = req.getContextPath(); // /H20221025
 		String path = uri.substring(context.length()); // /main.do
