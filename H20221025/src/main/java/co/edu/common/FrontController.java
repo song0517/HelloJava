@@ -16,6 +16,8 @@ import co.edu.control.BulletinControl;
 import co.edu.control.FaqControl;
 import co.edu.control.MainControl;
 import co.edu.control.MemberList;
+import co.edu.control.PasswdReConfirm;
+import co.edu.control.PasswdReConfirmForm;
 import co.edu.control.SearchBoard;
 import co.edu.control.SignIn;
 import co.edu.control.SignInForm;
@@ -63,6 +65,10 @@ public class FrontController extends HttpServlet{
 		// 로그인
 		controlList.put("/signInForm.do", new SignInForm()); //로그인화면
 		controlList.put("/signIn.do", new SignIn()); //로그인처리
+		
+		// 비밀번호 찾기
+		controlList.put("/passwdReConfirmForm.do", new PasswdReConfirmForm());
+		controlList.put("/passwdReConfirm.do", new PasswdReConfirm());
 		
 		// 로그아웃
 		controlList.put("/signOut.do", new SignOut());

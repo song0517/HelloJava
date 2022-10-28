@@ -6,7 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>📕📙게시글 상세보기📗📘</title>
+<title>게시글 상세보기</title>
+<style>
+	tr{
+		font-weight: bold;
+	}
+
+</style>
 </head>
 <body>
 <h3>📕📙게시글 상세보기📗📘</h3>

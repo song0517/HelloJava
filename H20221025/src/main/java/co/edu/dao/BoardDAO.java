@@ -313,19 +313,19 @@ public class BoardDAO extends DAO {
 		}
 		return null;
 	}
-	
-	//로그인
+
+	// 로그인
 	public MemberVO login(String id, String passwd) {
 		getConnect();
 		String sql = "select * from members where id = ? and passwd = ?";
-		
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, passwd);
-			
+
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				MemberVO vo = new MemberVO();
 				vo.setId(rs.getString("id"));
 				vo.setPasswd(rs.getString("passwd"));
@@ -340,5 +340,54 @@ public class BoardDAO extends DAO {
 			disconnect();
 		}
 		return null;
+	}
+
+	// ID찾기
+	public MemberVO findId(String id) {
+		getConnect();
+		String sql = "select * from members where id = ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setId(rs.getString("id"));
+				vo.setPasswd(rs.getString("passwd"));
+				vo.setName(rs.getString("name"));
+				vo.setEmail(rs.getString("email"));
+				vo.setResposibility(rs.getString("resposibility"));
+				return vo;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return null;
+	}
+
+	// PW수정
+	public boolean updatePw(MemberVO vo) {
+		getConnect();
+		String sql = "update members set passwd = ? where id = ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getPasswd());
+			psmt.setString(2, vo.getId());
+
+			int r = psmt.executeUpdate();
+			if (r > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return false;
 	}
 }

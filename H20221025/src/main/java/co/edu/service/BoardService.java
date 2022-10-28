@@ -35,6 +35,11 @@ public interface BoardService {
 	//회원목록보기
 	public List<MemberVO> memberList();
 	
+	//ID찾기
+	public MemberVO findId(String id);
+	//비밀번호 변경
+	public boolean updatePw(MemberVO vo);
+	
 	//FAQ
 	public List<FaqVO> getFaqList(FaqVO faq);
 }

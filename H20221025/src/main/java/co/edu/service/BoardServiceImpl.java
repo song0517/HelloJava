@@ -61,5 +61,15 @@ public class BoardServiceImpl implements BoardService {
 	public MemberVO login(String id, String passwd) {
 		return dao.login(id, passwd);
 	}
+
+	@Override
+	public MemberVO findId(String id) {
+		return dao.findId(id);
+	}
+
+	@Override
+	public boolean updatePw(MemberVO vo) {
+		return dao.updatePw(vo);
+	}
 	
 }
