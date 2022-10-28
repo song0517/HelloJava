@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean updateBoard(BoardVO vo) {
-		return false;
+		return dao.updateBoard(vo);
 	}
 
 	@Override
