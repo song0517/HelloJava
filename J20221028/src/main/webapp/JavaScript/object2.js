@@ -27,26 +27,45 @@ document.addEventListener('DOMContentLoaded', function() {
 	const fields = ['id', 'first_name', 'email', 'salary'];
 	//let ulTag = document.createElement('ul');
 	let tableTag = document.createElement('table');
-	let trTag = document.createElement('tr');
+	let theadTag = document.createElement('thead');
+	let tbodyTag = document.createElement('tbody');
+	
+	tableTag.appendChild(theadTag);
+	tableTag.appendChild(tbodyTag);
 
+	let trTag = document.createElement('tr');
+	let main = '';
+	for(field of fields){
+		let thTag = document.createElement('th');
+		main = `${field}`;
+		let txt = document.createTextNode(main);
+		trTag.appendChild(thTag);
+		thTag.appendChild(txt);
+		theadTag.appendChild(thTag);
+	}
+	
 	for (row of result) {
 		//ulTag.appendChild(makeList(row));
-		trTag.appendChild(makeTr(row));
+		tbodyTag.appendChild(makeTr(row));
 	}
-
 	//document.getElementById('show').appendChild(ulTag);
 	document.getElementById('show').appendChild(tableTag);
 
 	function makeTr(obj) {
+		
 		let str = '';
+		let trTag2 = document.createElement('tr');
 		
 		for (field of fields) {
 			let tdTag = document.createElement('td');
-			str += `${field}: ${obj[field]} `;
+			str = `${obj[field]} `;
 			let txt = document.createTextNode(str);
-		}
+			trTag2.appendChild(tdTag);
 			tdTag.appendChild(txt);
-			trTag.appendChild(tdTag);
+
+			}
+			
+			return trTag2;
 	}
 
 	function makeList(obj) {
