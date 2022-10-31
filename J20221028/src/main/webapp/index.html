@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>index.html</title>
-<script src="JavaScript/object2.js"></script>
+<!-- <script src="JavaScript/object2.js"></script> -->
+<!-- <script src="JavaScript/dom1.js"></script> -->
+<script src="JavaScript/dom2.js"></script>
+
 <style>
 	table{
 		border:1px solid #000;
@@ -19,12 +22,24 @@
 </style>
 </head>
 <body>
+	<form action="">
+		id: <input type="text" id="id"><br>
+		first_name: <input type="text" id="fname"><br>
+		email: <input type="text" id="email"><br>
+		salary: <input type="number" id="salary"><br>
+		gender: <select id="gender">
+					<option value="Male">남</option>
+					<option value="Female">여</option>
+				</select><br>
+		<button type="button">추가</button>
+		<button type="button">수정</button>
+		<button type="button">선택삭제</button>
+	</form>
+	
+	<hr>
 	<div id="show">
-		<!--  <table border='1'>
-			<tr>
-				<th>1</th><th>first_name</th><th>email</th><th>salary</th>
-			</tr>
-		</table>-->
+		
 	</div>
+	
 </body>
 </html>
