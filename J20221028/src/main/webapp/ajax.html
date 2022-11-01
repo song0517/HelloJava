@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax.html</title>
+</head>
+<body>
+	<h3>Ajax 호출</h3>
+	<button>요청</button>
+	<script>
+		//버튼 실행 이벤트
+		document.querySelector('button').addEventListener('click', loadData);
+		
+		function loadData() {
+			let ajax = new XMLHttpRequest();
+			//요청페이지 지정 : 요청방식, 페이지(url), 서버로 부터 특정 데이터 가져오기
+			ajax.open('get', 'data/MOCK_DATA.json');
+			// 실제 요청 페이지 호출
+			ajax.send();
+			//속성 : on이 있으면 모두 이벤트실행, load가 되면 함수를 실행시켜라.
+			ajax.onload = loadCallback; //event를 받을 때 this는 ajax
+		}
+		
+		// ajax 객체에 로드이벤트 발생할 때 실행할 콜백함수.
+		function loadCallback() {
+			//console.log(ajax.responseText);
+			// 텍스트형식을 자바스크립트 오브젝트 타입으로 변경. 파싱작업
+			// this는 ajax를 의미
+			let data = JSON.parse(this.responseText);
+			
+			let table = document.createElement('table');
+			let tbody = document.createElement('tbody');
+			
+			data.forEach(row => {
+				//배열, data가 가지고 있는 만큼 반복해서 가져오기
+				//console.log(row.id, row.first_name, row.email);
+				tbody.append(makeTr(row));
+			});
+			
+			table.append(tbody);
+			//body태그에 테이블 생성
+			document.getElementsByTagName('body')[0].append(table);
+		}
+		
+		// data한건을 tr 생성해주는 함수
+		function makeTr(obj) {
+			let tr = document.createElement('tr');
+			for(let field in obj){
+				let td = document.createElement('td');
+				let txt = document.createTextNode(obj[field]);
+				
+				td.append(txt);
+				tr.append(td);
+			}
+			
+			return tr;
+		}
+	</script>
+</body>
+</html>

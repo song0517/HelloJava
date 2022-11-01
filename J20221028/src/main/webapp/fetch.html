@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>fetch.html</title>
+</head>
+<body>
+	<h3>회원등록페이지</h3>
+	<form name="submitFrm" action="" method="post">
+		id: <input type="text" id="id"><br>
+		pass: <input type="text" id="passwd"><br>
+		name: <input type="text" id="name"><br>
+		email: <input type="email" id="email"><br>
+		<input type="submit" value="등록">
+	</form>
+
+	<div id="show"></div>
+	
+	<script>
+		function makeTr(obj) {
+			let tr = document.createElement('tr');
+			tr.setAttribute('id', 'tr_' + obj.id);
+			for(let field in obj){
+				if(field == 'passwd') continue;
+				let td = document.createElement('td');
+				let txt = document.createTextNode(obj[field]);
+				
+				td.append(txt);
+				tr.append(td);
+			}
+			
+			let tdTag = document.createElement('td');
+			let buttonTag = document.createElement('button');
+			buttonTag.addEventListener('click', deleteFunc);
+			
+			let txt = document.createTextNode('삭제');
+			tdTag.append(buttonTag);
+			buttonTag.append(txt);
+			tr.append(tdTag);
+			
+			return tr;
+		}
+	
+	
+		//호출
+		//get방식 요청
+		fetch('MemberListServlet') //json타입
+		//정상적으로 실행될 경우
+		//자바스크립트 오브젝트타입으로 변환
+		.then( result => result.json() )
+		.then( showData )
+		.catch(function(err) {
+			//실패할 경우
+			console.log(err);
+		})
+		
+		function showData(result) {
+			console.log(result);
+		}
+	</script>
+</body>
+</html>

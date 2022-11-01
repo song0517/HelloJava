@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>memberAdd.html</title>
+</head>
+<body>
+	<!--<h3>회원등록페이지</h3>
+	<form name="submitFrm" action="" method="post">
+		id: <input type="text" id="id"><br>
+		pass: <input type="text" id="passwd"><br>
+		name: <input type="text" id="name"><br>
+		email: <input type="email" id="email"><br>
+		<input type="submit" value="등록">
+	</form> -->
+	
+	<form name="secondFrm"></form>
+	
+	<script>
+		document.forms.submitFrm.action = "../index.html";
+		//submitFrm.method='get';
+		document.forms.submitFrm.onsubmit = function(e) {
+			//이벤트가 가지고 있는 기본 기능 차단 -> preventDefault(), MemberListServlet으로 이동하지 않고 페이지 안에 머문다.
+			e.preventDefault();
+			//console.log('hhh');
+			let id = document.getElementById('id').value;
+			let pw = document.getElementById('passwd').value;
+			let nm = document.getElementById('name').value;
+			let em = document.getElementById('email').value;
+			
+			//boolean타입으로 처리
+			let check = id && pw && nm && em;
+			if(!check){
+				alert('필수항목입니다.');
+				return false;
+			}
+			//submitFrm.submit();
+			
+			//ajax 호출
+			//여러개 값 넘길경우 &로 구분
+			let data = 'id=' + id + '&passwd='+ pw +'&email=' + em +'&name=' + nm;
+			let ajax = new XMLHttpRequest();
+			ajax.open('post', '../MemberListServlet');
+			//post방식일 경우 Header 작성, 클라이언트에서 서버로 갈경우, 키-값으로 넘기겠다(x-www-form-urlencoded), json일경우(JSON)
+			ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			ajax.send(data);
+			ajax.onload = function() {
+				console.log(ajax.responseText);
+				let data = JSON.parse(ajax.responseText);
+				let pTag = document.createElement('p');
+				pTag.textContent = '아이디: ' + data.id + ', 이름: ' + data.name;
+				
+				secondFrm.after(pTag);
+			}
+		}
+	</script>
+</body>
+</html>
