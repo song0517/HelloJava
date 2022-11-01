@@ -105,8 +105,10 @@
 				tr.append(td);
 			}
 			
+			//버튼 생성
 			let tdTag = document.createElement('td');
 			let buttonTag = document.createElement('button');
+			//deleteFunc에 ()를 붙일 경우 항시 실행이 되기 때문에 클릭했을 때 실행이 되도록 괄호를 지워야된다.
 			buttonTag.addEventListener('click', deleteFunc);
 			
 			let txt = document.createTextNode('삭제');

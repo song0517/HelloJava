@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>portal.html</title>
+</head>
+
+<body>
+	시도: <input type="text" id="sido"> 
+	<button id="findBtn">버튼</button>
+
+
+	<div id="show">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>센터id</th>
+					<th>센터명</th>
+					<th>연락처</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
+	</div>
+	<script>
+		let url =
+			'https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&returnType=JSON&serviceKey=GJnxJjlj8xutAiFLYfnPjYQTX3NgvY%2BlAClNUnPyjFj%2BcwQ1cfpWt3GtwUlhxIf4hjc0MsPdY48W7qY5utqE7w%3D%3D';
+
+		fetch(url)
+			.then(result => result.json()) // json -> object 변환
+			.then(showList)
+			.catch(error => console.log(error))
+		
+		let total;
+			
+		function showList(result) {
+			//console.log(result); // totalCount, data, page, current...
+			result.data.forEach(center => document.getElementById('list').append(makeTr(center)));
+			
+			total = result.data
+		}
+			
+		function makeTr(center) {
+			console.log(center);
+			let fields = ['id', 'centerName', 'phoneNumber'];
+			let tr = document.createElement('tr');
+			for(let field of fields){
+				let td = document.createElement('td');
+				let txt = document.createTextNode(center[field]);
+				
+				td.append(txt);
+				tr.append(td);
+			}
+			return tr;
+		}
+		
+		document.getElementById('findBtn').addEventListener('click', addFunc);
+		
+		function addFunc() {
+			let sido = document.getElementById('sido').value;
+			document.querySelectorAll('#list > tr').forEach(tr => tr.remove());
+			
+			total.forEach(center => {
+				if(center.sido == sido){
+					document.getElementById('list').append(makeTr(center));
+				}
+			})
+			
+		}
+
+	</script>
+</body>
+</html>
