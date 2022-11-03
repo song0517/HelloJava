@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>toDoList.html</title>
+	<style>
+		.close {
+            right: 0;
+            top: 0;
+            padding: 12px 50px;
+        }
+	</style>
+</head>
+
+<body>
+	<div id="myDIV" class="header">
+		<h2 style="margin:5px">My To Do List</h2>
+		<input type="text" id="myInput" placeholder="Title...">
+		<button id="addBtn">Add</button>
+	</div>
+
+	<div id="list">
+	</div>
+
+	<script>
+		let ul = document.createElement('ul');
+		document.getElementById('addBtn').addEventListener('click', addList);
+
+		document.getElementById('list').append(ul);
+
+		document.querySelector('.close').addEventListener('click', removeList);
+
+		function addList() {
+			let toDo = document.getElementById('myInput').value;
+			console.log(toDo);
+			
+			let li = document.createElement('li');
+			li.setAttribute('id', toDo);
+
+			let span = document.createElement('span');
+			span.setAttribute('class', 'close');
+			span.setAttribute('id', toDo);
+			span.textContent = 'X';
+
+			li.append(toDo);
+			li.append(span);
+
+			ul.append(li);
+
+			document.getElementById('myInput').value = '';
+		}
+
+		function removeList(){
+			console.log('click');
+		}
+	</script>
+</body>
+
+</html>

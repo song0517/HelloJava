@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>cal.html</title>
+    <script>
+        let obj = {
+            id: 'hong',
+            age: 20
+        }
+
+        obj = {} //new Object();
+        let ary = [] // new Array();
+        let today = new Date();
+        //today.getFullYear();
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //날짜기준 요일 정보 리턴
+            let month = 10;
+            today = new Date(2022, month, 1);
+
+            // 요일
+            let thisDay = today.getDay();
+            // 마지막 날짜
+            let lastDate = new Date(2022, month + 1, 0).getDate();
+            // 현재 날짜
+            let date = new Date().getDate();
+
+            //테이블 태그 생성
+            let table = document.createElement('table');
+            table.setAttribute('border', '1');
+
+            //thead
+            let days = ['일', '월', '화', '수', '목', '금', '토'];
+
+            let thead = document.createElement('thead');
+        
+            for(let d of days){
+                let th = document.createElement('th');
+                    th.textContent = d;
+                    thead.append(th);
+            }
+            thead.firstChild.setAttribute('style', 'color:red');
+            thead.lastChild.setAttribute('style', 'color:blue');
+
+            table.append(thead);
+
+            //tbody 태그 생성
+            let tbody = document.createElement('tbody');
+
+            // tr, td 생성
+            let tr = document.createElement('tr');
+            tbody.append(tr);
+
+            //요일 지정
+            let p = document.createElement('p');
+            p.textContent = (month + 1) + '월';
+            document.getElementById('show').append(p);
+
+            for (let i = 0; i < thisDay; i++) {
+                let td = document.createElement('td');
+                tr.append(td);
+            }
+
+            for (let i = 1; i <= lastDate; i++) {
+                if (i == date) {
+                    let td = document.createElement('td');
+                    td.setAttribute('style', 'background-color: pink');
+                    td.textContent = i;
+                    tr.append(td);
+                } else {
+                    let td = document.createElement('td');
+                    td.textContent = i;
+                    tr.append(td);
+                }
+
+                // 일주일 단위로 나누기
+                if ((i + thisDay) % 7 == 0) {
+                    tr = document.createElement('tr');
+                    tbody.append(tr);
+                }
+            }
+            table.append(tbody);
+            document.getElementById('show').append(table);
+        })
+    </script>
+</head>
+
+<body>
+    <div id="show">
+    </div>
+
+    <script>
+    </script>
+</body>
+
+</html>
