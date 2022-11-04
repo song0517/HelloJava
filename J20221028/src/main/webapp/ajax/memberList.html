@@ -87,6 +87,8 @@
 			
 			let data = JSON.parse(this.responseText);
 			
+			console.log(data);
+				
 			data.forEach(row => {
 				document.getElementById('list').append(makeTr(row));
 			});

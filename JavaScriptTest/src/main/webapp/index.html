@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		body {
+			width: 1000px;
+			margin: 0 10px;
+			border: 1px solid black;
+			padding: 10px;
+		}
+
+		#list {
+			border: 1px solid black;
+
+		}
+
+		hr {
+			border: 1px solid black;
+		}
+
+		form {
+			display: inline-block;
+			margin-bottom: 5px;
+		}
+
+		#float {
+			margin: 15px 100px;
+			float: right;
+		}
+
+		table {
+			border-collapse: collapse;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			width: 100%;
+		}
+
+		button {
+			width: 100px;
+		}
+
+		#inputForm>input {
+			width: 600px;
+			float: right;
+			margin-left: 5px;
+		}
+
+
+		th, td {
+			padding: 8px;
+			text-align: center;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: pink;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>도서목록 페이지</h3>
+	<hr>
+	<form id = "inputForm" name="addBookFrm" action="" method="post">
+		도서코드: <input type="text" id="bookCode"><br>
+		도서명: <input type="text" id="bookName"><br>
+		저자: <input type="text" id="author"><br>
+		출판사: <input type="text" id="press"><br>
+		금액: <input type="number" id="price"><br>
+	</form>
+
+	<div id="float">
+		<button type="button">저장</button><br><br>
+		<button type="button">선택삭제</button>
+	</div>
+
+	<div id="list">
+	</div>
+
+	<script>
+		fetch('BookListServlet')
+			.then(result => result.json())
+			.then(showList)
+			.catch(err => console.log(err));
+
+		document.querySelectorAll('button[type="button"]')[0].addEventListener('click', addBookFunc);
+		document.querySelectorAll('button[type="button"]')[1].addEventListener('click', delBookFunc);
+
+		//처음화면
+		function showList(result) {
+			console.log(result);
+			//테이블 생성
+			let tableTag = document.createElement('table');
+			//tableTag.setAttribute('border', '1');
+			let show = document.getElementById('list');
+			show.appendChild(tableTag);
+
+			// thead 영역
+			let theadTag = document.createElement('thead');
+			let tr = document.createElement('tr');
+
+			// 체크박스 생성
+			let th = document.createElement('th');
+			let checkbox = document.createElement('input');
+			checkbox.setAttribute("type", "checkbox");
+
+			checkbox.addEventListener('change', function () {
+				document.querySelectorAll('#list input[type="checkbox"]').forEach(function (check) {
+					check.checked = checkbox.checked;
+				});
+			});
+
+			th.appendChild(checkbox);
+			tr.appendChild(th);
+
+			theadTag.appendChild(tr);
+			tableTag.appendChild(theadTag);
+
+			let heads = ['도서코드', '도서명', '저자', '출판사', '가격', '삭제'];
+
+			for (let title of heads) {
+				let thTag = document.createElement('th');
+				let titleTxt = document.createTextNode(title);
+
+				thTag.appendChild(titleTxt);
+				tr.appendChild(thTag);
+			}
+			theadTag.appendChild(tr);
+			tableTag.appendChild(theadTag);
+
+			// tbody 영역
+			let tbodyTag = document.createElement('tbody');
+			tbodyTag.setAttribute('id', 'tblist');
+			tableTag.appendChild(tbodyTag);
+
+			result.forEach(row => {
+				tbodyTag.append(makeTr(row));
+			});
+		}
+
+		function makeTr(obj) {
+			// tbody 영억 생성
+			let tr = document.createElement('tr');
+			tr.setAttribute('id', obj.bookCode);
+
+			// 체크박스
+			let td = document.createElement('td');
+			td.style.textAlign = 'center';
+			let checkBox = document.createElement('input');
+			checkBox.setAttribute("type", "checkbox");
+			checkBox.addEventListener('change', function () {
+
+			});
+			td.appendChild(checkBox);
+			tr.appendChild(td);
+
+			// 리스트
+			for (let field in obj) {
+				let td = document.createElement('td');
+				let txt = document.createTextNode(obj[field]);
+
+				td.append(txt);
+				tr.append(td);
+			}
+
+			// 삭제버튼
+			td = document.createElement('td');
+			let button = document.createElement('button');
+			button.addEventListener('click', delBook);
+
+			button.textContent = '삭제';
+			td.append(button);
+			tr.append(td);
+
+			return tr;
+		}
+
+		// 삭제 버튼을 눌렀을 경우
+		function delBook() {
+			let bookCode = this.parentElement.parentElement.getAttribute('id');
+			console.log(bookCode);
+
+			let data = 'bookCode=' + bookCode;
+
+			fetch('./BookDelServlet', {
+					method: 'post',
+					headers: {
+						'Content-type': 'application/x-www-form-urlencoded'
+					},
+					body: data
+				})
+				.then(result => result.text())
+				.then(result => {
+					if (result == 'success') {
+						alert('삭제 완료!!');
+					} else if (result == 'fail') {
+						alert('처리 중 에러 발생!!');
+					}
+				})
+				.catch(err => console.log(err));
+
+			document.getElementById(bookCode).remove();
+
+		}
+
+		// 저장버튼을 눌렀을 경우
+		function addBookFunc(e) {
+			e.preventDefault();
+			let bookCode = document.getElementById('bookCode').value;
+			let bookName = document.getElementById('bookName').value;
+			let author = document.getElementById('author').value;
+			let press = document.getElementById('press').value;
+			let price = document.getElementById('price').value;
+
+			let data = 'bookCode=' + bookCode + '&bookName=' + bookName + '&author=' + author + '&press=' + press +
+				'&price=' + price;
+
+			fetch('./BookAddServlet', {
+					method: 'post',
+					headers: {
+						'Content-type': 'application/x-www-form-urlencoded'
+					},
+					body: data
+				})
+				.then(result => result.json())
+				.then(addBookList)
+				.catch(err => console.log(err));
+		}
+
+		// 목록 추가
+		function addBookList(result) {
+			console.log(result);
+			document.querySelector('#tblist').appendChild(makeTr(result));
+
+			document.getElementById('bookCode').value = '';
+			document.getElementById('bookName').value = '';
+			document.getElementById('author').value = '';
+			document.getElementById('press').value = '';
+			document.getElementById('price').value = '';
+		}
+
+		// 선택삭제버튼 눌렀을 경우
+		function delBookFunc() {
+			let trs = document.querySelectorAll('#list>table>tbody>tr');
+
+			for (let i = 0; i < trs.length; i++) {
+				if (trs[i].children[0].children[0].checked) {
+					let bookCode = trs[i].id;
+					let data = 'bookCode=' + bookCode;
+
+					//DB 삭제
+					fetch('./BookDelServlet', {
+							method: 'post',
+							headers: {
+								'Content-type': 'application/x-www-form-urlencoded'
+							},
+							body: data
+						})
+						.then(result => result.text())
+						.then(result => {
+							if (result == 'success') {
+
+							} else if (result == 'fail') {}
+						})
+						.catch(err => console.log(err));
+
+					//화면삭제
+					trs[i].remove();
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>
