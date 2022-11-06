@@ -10,7 +10,7 @@ function domLoadedFunc() {
 				 {"id":3,"first_name":"Alisha","last_name":"Reeks","email":"areeks2@admin.ch","gender":"Female","salary":4268},
 				 {"id":4,"first_name":"Cullen","last_name":"Yearsley","email":"cyearsley3@rediff.com","gender":"Male","salary":6504}]`;
 
-	//json형태로 만들어진것을 자바스크립트 object형식으로 바꾸겠다.
+	//json형태로 만들어진것을 자바스크립트 object형식으로 바꾸겠다아아.
 	let obj = {}
 	let result = JSON.parse(data); // json => object
 
@@ -95,7 +95,8 @@ function domLoadedFunc() {
 		let email = document.getElementById('email').value;
 		let salary = document.getElementById('salary').value;
 		let gender = document.getElementById('gender').value;
-
+		
+		//담기
 		let newRow = {
 			id: id,
 			first_name: fName,

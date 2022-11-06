@@ -6,17 +6,74 @@
 	<title>Insert title here</title>
 	<style>
 		body {
-			width: 1000px;
+			width: 800px;
 			margin: 0 10px;
 			border: 1px solid black;
 			padding: 10px;
+			display: inline-block;
 		}
-
-		#list {
+		
+		ul {
+			list-style: none;
+			padding-left: 0;
+			display: inline-block;
+			
+		}
+		
+		ul li{
+    		clear: both;
+		}
+		
+		.field{
+		    float: left;
+		    width: 100px;
+		    font-weight: bold;
+		    font-size: 0.9em;
+		    line-height: 55px;
+		    text-align: center;
+		    margin-right: 15px;
+		}
+		
+		ul>li>input{
+			float: left;
+		    width: 300px;
+		    height: 30px;
+		    border: 1px solid #aaa;
+		    border-radius: 5px;
+		    padding: 5px;
+		    margin: 5px 0;
+		}
+		
+		label{
+			float:left;
+		}
+		
+		#float {
+			
+			float: right;
+		}
+		
+		#button {
+		    margin-right: 100px;
+		    margin-top: 100px;
+		    float:right;
+		}
+		
+		#button button{
+		    width: 150px;
+		    height: 50px;
+		   	margin-bottom: 10px;
+		    border: 1px solid #ccc;
+		    background: #eee;
+		    font-size: 0.9em;
+		    border-radius: 5px;
+		}
+		
+		#list{
+			clear: both;
 			border: 1px solid black;
-
 		}
-
+		
 		hr {
 			border: 1px solid black;
 		}
@@ -25,57 +82,71 @@
 			display: inline-block;
 			margin-bottom: 5px;
 		}
-
-		#float {
-			margin: 15px 100px;
-			float: right;
-		}
-
+		
 		table {
 			border-collapse: collapse;
 			margin-top: 10px;
 			margin-bottom: 10px;
 			width: 100%;
+			border-collapse: separate;
+ 		 	border-spacing: 0 10px;
 		}
-
-		button {
-			width: 100px;
-		}
-
-		#inputForm>input {
-			width: 600px;
-			float: right;
-			margin-left: 5px;
-		}
-
-
+		
 		th, td {
 			padding: 8px;
 			text-align: center;
+			border-top: 1px solid #ddd;
 			border-bottom: 1px solid #ddd;
 		}
 
 		th {
 			background-color: pink;
 		}
+		
+		tbody>tr:hover {
+			background-color: #dcdcdc;
+		}
+		
 	</style>
 </head>
 
 <body>
 	<h3>도서목록 페이지</h3>
 	<hr>
-	<form id = "inputForm" name="addBookFrm" action="" method="post">
-		도서코드: <input type="text" id="bookCode"><br>
-		도서명: <input type="text" id="bookName"><br>
-		저자: <input type="text" id="author"><br>
-		출판사: <input type="text" id="press"><br>
-		금액: <input type="number" id="price"><br>
-	</form>
-
-	<div id="float">
-		<button type="button">저장</button><br><br>
-		<button type="button">선택삭제</button>
-	</div>
+		<ul id = "inputForm" name="addBookFrm">
+			<li>
+				<label for="bookCode" class="field">도서코드:</label>
+				<input type="text" id="bookCode">
+			</li>
+			
+			<li>
+				<label for="bookName" class="field">도서명:</label>
+				<input type="text" id="bookName">
+			</li>
+			
+			<li>
+				<label for="author" class="field">저자:</label>
+				<input type="text" id="author">
+			</li>
+			
+			<li>
+				<label for="press" class="field">출판사:</label>
+				<input type="text" id="press">
+			</li>
+			
+			<li>
+				<label for="price" class="field">금액:</label>
+				<input type="number" id="price">
+			</li>
+			
+		</ul>
+		
+		<ul id="button">
+			<li>
+				<button type="button">저장</button> <br>
+				<button type="button">선택삭제</button>
+			</li>
+		</ul>
 
 	<div id="list">
 	</div>
@@ -232,19 +303,19 @@
 
 		// 목록 추가
 		function addBookList(result) {
-			console.log(result);
-			document.querySelector('#tblist').appendChild(makeTr(result));
+				document.querySelector('#tblist').appendChild(makeTr(result));
 
-			document.getElementById('bookCode').value = '';
-			document.getElementById('bookName').value = '';
-			document.getElementById('author').value = '';
-			document.getElementById('press').value = '';
-			document.getElementById('price').value = '';
+				document.getElementById('bookCode').value = '';
+				document.getElementById('bookName').value = '';
+				document.getElementById('author').value = '';
+				document.getElementById('press').value = '';
+				document.getElementById('price').value = '';
 		}
 
 		// 선택삭제버튼 눌렀을 경우
 		function delBookFunc() {
 			let trs = document.querySelectorAll('#list>table>tbody>tr');
+			console.log(trs);
 
 			for (let i = 0; i < trs.length; i++) {
 				if (trs[i].children[0].children[0].checked) {
@@ -271,6 +342,7 @@
 					trs[i].remove();
 				}
 			}
+				alert('삭제 완료!!');
 		}
 	</script>
 </body>
