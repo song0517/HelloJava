@@ -17,21 +17,10 @@
 			list-style: none;
 			padding-left: 0;
 			display: inline-block;
-			
 		}
 		
 		ul li{
     		clear: both;
-		}
-		
-		.field{
-		    float: left;
-		    width: 100px;
-		    font-weight: bold;
-		    font-size: 0.9em;
-		    line-height: 55px;
-		    text-align: center;
-		    margin-right: 15px;
 		}
 		
 		ul>li>input{
@@ -44,13 +33,14 @@
 		    margin: 5px 0;
 		}
 		
-		label{
-			float:left;
-		}
-		
-		#float {
-			
-			float: right;
+		.field{
+		    float: left;
+		    width: 100px;
+		    font-weight: bold;
+		    font-size: 0.9em;
+		    line-height: 55px;
+		    text-align: center;
+		    margin-right: 15px;
 		}
 		
 		#button {
@@ -152,11 +142,13 @@
 	</div>
 
 	<script>
+		//전체 리스트 가져오기
 		fetch('BookListServlet')
 			.then(result => result.json())
 			.then(showList)
 			.catch(err => console.log(err));
-
+	
+		//버튼이벤트 발생
 		document.querySelectorAll('button[type="button"]')[0].addEventListener('click', addBookFunc);
 		document.querySelectorAll('button[type="button"]')[1].addEventListener('click', delBookFunc);
 
@@ -169,7 +161,7 @@
 			let show = document.getElementById('list');
 			show.appendChild(tableTag);
 
-			// thead 영역
+			// thead 영역 생성
 			let theadTag = document.createElement('thead');
 			let tr = document.createElement('tr');
 
@@ -177,7 +169,7 @@
 			let th = document.createElement('th');
 			let checkbox = document.createElement('input');
 			checkbox.setAttribute("type", "checkbox");
-
+			// 전체 항목 선택 이벤트
 			checkbox.addEventListener('change', function () {
 				document.querySelectorAll('#list input[type="checkbox"]').forEach(function (check) {
 					check.checked = checkbox.checked;
@@ -189,7 +181,8 @@
 
 			theadTag.appendChild(tr);
 			tableTag.appendChild(theadTag);
-
+			
+			// th 생성
 			let heads = ['도서코드', '도서명', '저자', '출판사', '가격', '삭제'];
 
 			for (let title of heads) {
@@ -206,14 +199,14 @@
 			let tbodyTag = document.createElement('tbody');
 			tbodyTag.setAttribute('id', 'tblist');
 			tableTag.appendChild(tbodyTag);
-
+			
 			result.forEach(row => {
 				tbodyTag.append(makeTr(row));
 			});
-		}
+		} // end of showList(result)
 
 		function makeTr(obj) {
-			// tbody 영억 생성
+			// tbody 영역 생성
 			let tr = document.createElement('tr');
 			tr.setAttribute('id', obj.bookCode);
 
@@ -247,7 +240,7 @@
 			tr.append(td);
 
 			return tr;
-		}
+		} // end of makeTr(obj)
 
 		// 삭제 버튼을 눌렀을 경우
 		function delBook() {
@@ -255,7 +248,8 @@
 			console.log(bookCode);
 
 			let data = 'bookCode=' + bookCode;
-
+			
+			// DB 삭제
 			fetch('./BookDelServlet', {
 					method: 'post',
 					headers: {
@@ -272,10 +266,11 @@
 					}
 				})
 				.catch(err => console.log(err));
-
+			
+			// 화면 삭제
 			document.getElementById(bookCode).remove();
 
-		}
+		} // end of delBook()
 
 		// 저장버튼을 눌렀을 경우
 		function addBookFunc(e) {
@@ -288,7 +283,8 @@
 
 			let data = 'bookCode=' + bookCode + '&bookName=' + bookName + '&author=' + author + '&press=' + press +
 				'&price=' + price;
-
+			
+			//DB 추가
 			fetch('./BookAddServlet', {
 					method: 'post',
 					headers: {
@@ -299,18 +295,19 @@
 				.then(result => result.json())
 				.then(addBookList)
 				.catch(err => console.log(err));
-		}
+		} // end of addBookFunc(e)
 
 		// 목록 추가
 		function addBookList(result) {
 				document.querySelector('#tblist').appendChild(makeTr(result));
-
+				
+				// input영역 리셋
 				document.getElementById('bookCode').value = '';
 				document.getElementById('bookName').value = '';
 				document.getElementById('author').value = '';
 				document.getElementById('press').value = '';
 				document.getElementById('price').value = '';
-		}
+		} // end of addBookList(result)
 
 		// 선택삭제버튼 눌렀을 경우
 		function delBookFunc() {
@@ -343,7 +340,7 @@
 				}
 			}
 				alert('삭제 완료!!');
-		}
+		} // end of delBookFunc()
 	</script>
 </body>
 
