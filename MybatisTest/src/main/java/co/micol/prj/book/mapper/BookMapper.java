@@ -1,0 +1,13 @@
+package co.micol.prj.book.mapper;
+
+import java.util.List;
+
+import co.micol.prj.book.vo.BookVO;
+
+public interface BookMapper {
+	List<BookVO> bookSelectList(); //book 전체 리스트 가져오기, 메소드명 다른 버전 : getBookList(R)
+	BookVO bookSelect(BookVO vo);  //한권의 책 상세내역 가져오기(R), getBook
+	int bookInsert(BookVO vo);     //도서 입력(C), setBook
+	int bookDelete(BookVO vo);     //도서 삭제(D), deleteBook
+	int bookUpdate(BookVO vo);     //도서 변경(U), updateBook
+}
