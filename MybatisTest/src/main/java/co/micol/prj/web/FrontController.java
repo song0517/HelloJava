@@ -14,9 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import co.micol.prj.book.command.BookList;
 import co.micol.prj.common.Command;
 import co.micol.prj.main.MainCommand;
+import co.micol.prj.member.command.AjaxIdCheck;
+import co.micol.prj.member.command.Logout;
+import co.micol.prj.member.command.MemberJoin;
+import co.micol.prj.member.command.MemberJoinForm;
+import co.micol.prj.member.command.MemberLogin;
+import co.micol.prj.member.command.MemberLoginForm;
 
 /**
- * 모든 요청을 받아들이는 컨트롤러
+ * 모든 요청을 받아들이는 컨트롤러, 서블릿생성
  */
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -34,6 +40,16 @@ public class FrontController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainCommand()); //처음보여줄 메인 페이지 명령
 		map.put("/bookList.do", new BookList()); //책목록보기
+		
+		map.put("/memberLoginForm.do", new MemberLoginForm()); //로그인 폼 호출
+		map.put("/memberLogin.do", new MemberLogin()); //멤버로그인처리
+		map.put("/logout.do", new Logout()); //로그아웃
+		
+		map.put("/memberJoinForm.do", new MemberJoinForm()); //회원가입 폼
+		 
+		map.put("/ajaxIdCheck.do", new AjaxIdCheck()); //ajax를 이용한 아이디 중복체크
+		
+		map.put("/memberJoin.do", new MemberJoin()); //멤버 추가
 		
 	}
 	
@@ -53,8 +69,17 @@ public class FrontController extends HttpServlet {
 		// 서버에서 접근할 수 있도록 설정
 		if(!viewPage.endsWith(".do") && viewPage != null) {
 			// ajax 처리 : 요청한 페이지로 돌아오는 곳
+			if(viewPage.startsWith("ajax:")){
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().append(viewPage.substring(5));
+				return;
+			}
+			
 			// 타일즈 돌아가는 곳
-			viewPage = "/WEB-INF/views/" + viewPage + ".jsp";
+			if(!viewPage.endsWith(".tiles")) {
+				viewPage = "/WEB-INF/views/" + viewPage + ".jsp"; //tiles를 안태움
+			}
+			
 			// 뷰를 찾아서 Dispatcher하기
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response); // dispatcher로 하면 요청을 하면서 값을 그대로 전달받아 req, resp을 함께 가져간다., 내가 하기 싫은 것을 값과 함께 전달

@@ -3,10 +3,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
+
+	<listener>
+		<listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
+	</listener>
 	
+	<servlet>
+		<servlet-name>Tiles</servlet-name>
+		<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+	</servlet>
+	<!-- 서블릿 매핑 -->
+	<servlet-mapping>
+		<servlet-name>Tiles</servlet-name>
+		<url-pattern>*.tiles</url-pattern>
+	</servlet-mapping>
+
 	<!-- 처음 들어올때 아래의 파일을 먼저 읽어오라 : 홈페이지 -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 </web-app>

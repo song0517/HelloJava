@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.prj.member.mapper.MemberMapper">
+	<select id="memberSelectList" resultType="co.micol.prj.member.vo.MemberVO">
+		SELECT * FROM MEMBERS
+	</select>
+	
+	<select id="memberSelect" resultType="co.micol.prj.member.vo.MemberVO">
+		SELECT * FROM MEMBERS WHERE ID = #{id}
+	</select>
+	
+	<insert id="memberInsert">
+		INSERT INTO MEMBERS VALUES(#{id}, #{passwd}, #{name}, #{email}, 'user')
+	</insert>
+	
+	<delete id="memberDelete">
+	
+	</delete>
+	
+	<update id="memberUpdate">
+		
+	</update>
+	
+	<!-- mamberMapper.java에서 선언한 파라메타 이름을 #안에 넣어주기 -->
+	<select id="memberLogin" resultType="co.micol.prj.member.vo.MemberVO">
+		SELECT * FROM MEMBERS WHERE ID = #{id} AND PASSWD = #{password}
+	</select>
+	
+	<!-- true, false값으로 반환되어야 되기 때문에 boolean으로 -->
+	<select id="isMemberIdCheck" resultType="boolean">
+		SELECT CASE WHEN COUNT(ID)= 1 THEN 0 ELSE 1 END AS ID FROM MEMBERS WHERE ID = #{id}
+	</select>
+</mapper>

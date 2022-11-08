@@ -7,11 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div align="center">
-		<h1>WelCome To My WebSite</h1>
-		
-		<!-- <h3><a href="memberLoginForm.do">로그인</a></h3>
-		<h3><a href="bookList.do">북목록보기</a></h3> -->
+	<div>
+		<h1>예담직업전문학교 1강의실 Copy@Write by Micol</h1>
 	</div>
 </body>
 </html>
